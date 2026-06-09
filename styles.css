@@ -547,37 +547,54 @@ h3 {
 
 .timer-grid {
   display: grid;
-  max-width: 1180px;
+  max-width: 860px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 0.75rem;
   margin: 0 auto;
 }
 
 .timer-card {
-  min-height: 150px;
-  padding: 1.2rem;
+  position: relative;
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.85rem 0.95rem;
+  overflow: hidden;
   border: 1px solid rgba(79, 140, 255, 0.28);
   border-radius: 8px;
   background:
-    linear-gradient(145deg, rgba(219, 234, 254, 0.92), rgba(221, 214, 254, 0.84)),
+    linear-gradient(145deg, rgba(219, 234, 254, 0.95), rgba(221, 214, 254, 0.88)),
     var(--glass-strong);
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
 }
 
+.timer-card::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(79, 140, 255, 0.14), transparent 48%, rgba(139, 92, 246, 0.12));
+  content: "";
+}
+
+.timer-card > * {
+  position: relative;
+}
+
 .timer-card strong {
   display: block;
   color: var(--purple-dark);
-  font-size: 2.2rem;
+  font-size: 1.9rem;
   line-height: 1;
 }
 
 .timer-card span {
   display: block;
-  margin-top: 0.55rem;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.84rem;
   font-weight: 850;
+  text-transform: uppercase;
 }
 
 @keyframes pulse-soft {
@@ -1192,6 +1209,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.55rem;
+  perspective: 900px;
 }
 
 .memory-card {
@@ -1206,10 +1224,14 @@ h3 {
   cursor: pointer;
   font-size: 1.8rem;
   font-weight: 950;
+  transform-style: preserve-3d;
+  transition: box-shadow 180ms ease, transform 420ms ease;
 }
 
 .memory-card.open {
   background: var(--white);
+  animation: card-flip 420ms ease both;
+  box-shadow: 0 16px 34px rgba(79, 140, 255, 0.26);
 }
 
 .memory-card.locked {
@@ -1221,6 +1243,120 @@ h3 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@keyframes card-flip {
+  0% {
+    transform: rotateY(180deg) scale(0.96);
+  }
+
+  65% {
+    transform: rotateY(-8deg) scale(1.02);
+  }
+
+  100% {
+    transform: rotateY(0) scale(1);
+  }
+}
+
+.memory-victory {
+  position: fixed;
+  z-index: 110;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.22), transparent 24%),
+    rgba(5, 11, 31, 0.72);
+  backdrop-filter: blur(8px);
+  animation: victory-glow 520ms ease both;
+}
+
+.victory-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.victory-sparkles span {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  color: #dbeafe;
+  font-size: clamp(1rem, 3vw, 2rem);
+  text-shadow:
+    0 0 14px rgba(147, 197, 253, 0.9),
+    0 0 32px rgba(139, 92, 246, 0.7);
+  animation: sparkle-pop 1.2s ease-in-out var(--delay) infinite alternate;
+}
+
+.victory-popup {
+  position: relative;
+  display: grid;
+  width: min(420px, 100%);
+  gap: 0.8rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(219, 234, 254, 0.44);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(221, 214, 254, 0.96)),
+    var(--glass-strong);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
+  text-align: center;
+  animation: popup-bounce 520ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.victory-popup strong {
+  color: var(--purple-dark);
+  font-size: 1.6rem;
+  line-height: 1.05;
+}
+
+.victory-popup p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  font-weight: 850;
+}
+
+.victory-popup .note-button {
+  justify-self: center;
+}
+
+@keyframes victory-glow {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popup-bounce {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sparkle-pop {
+  from {
+    opacity: 0.35;
+    transform: translateY(10px) scale(0.75) rotate(-10deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-12px) scale(1.1) rotate(10deg);
+  }
 }
 
 .milestone-list {
@@ -1657,22 +1793,33 @@ h3 {
   }
 
   .hero-stat,
-  .stat-card,
-  .timer-card {
+  .stat-card {
     min-height: 112px;
   }
 
+  .timer-card {
+    min-height: 74px;
+    padding: 0.75rem 0.85rem;
+  }
+
   .hero-stat strong,
-  .stat-card strong,
-  .timer-card strong {
+  .stat-card strong {
     font-size: 1.65rem;
   }
 
+  .timer-card strong {
+    font-size: 1.55rem;
+  }
+
   .hero-stat span,
-  .stat-card span,
-  .timer-card span {
+  .stat-card span {
     font-size: 0.8rem;
     line-height: 1.35;
+  }
+
+  .timer-card span {
+    font-size: 0.72rem;
+    line-height: 1.2;
   }
 
   .author-card {
@@ -1793,8 +1940,11 @@ h3 {
 
 @media (max-width: 360px) {
   .hero-stats,
-  .stat-grid,
-  .timer-grid {
+  .stat-grid {
     grid-template-columns: 1fr;
+  }
+
+  .timer-grid {
+    gap: 0.55rem;
   }
 }

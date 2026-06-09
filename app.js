@@ -63,6 +63,7 @@ let matchedCards = 0;
 let currentNote = "";
 let currentVerseIndex = -1;
 let lightboxIndex = 0;
+let victoryShown = false;
 
 function setText(selector, value) {
   const element = $(selector);
@@ -547,6 +548,7 @@ function setupMemoryGame() {
   const photos = (data.photos || []).slice(0, 8);
   openedCards = [];
   matchedCards = 0;
+  victoryShown = false;
 
   if (photos.length < 2) {
     memoryCards = [];
@@ -601,8 +603,10 @@ function flipMemoryCard(index) {
     second.matched = true;
     matchedCards += 2;
     openedCards = [];
-    setText("#memoryStatus", matchedCards === memoryCards.length ? "Acabou. A gente foi bem, como sempre. ♥" : "Esse eu lembro. ♥");
+    const finished = matchedCards === memoryCards.length;
+    setText("#memoryStatus", finished ? "Acabou. A gente foi bem, como sempre. ♥" : "Esse eu lembro. ♥");
     renderMemoryBoard();
+    if (finished) showMemoryVictory();
     return;
   }
 
@@ -613,6 +617,42 @@ function flipMemoryCard(index) {
     openedCards = [];
     renderMemoryBoard();
   }, 800);
+}
+
+function showMemoryVictory() {
+  if (victoryShown) return;
+  victoryShown = true;
+  document.querySelector(".memory-victory")?.remove();
+
+  const overlay = create("div", "memory-victory", "");
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-label", "Vitória no jogo de memória");
+
+  const sparkleField = create("div", "victory-sparkles", "");
+  for (let index = 0; index < 28; index += 1) {
+    const sparkle = create("span", "", index % 3 === 0 ? "✦" : "♥");
+    sparkle.style.setProperty("--x", `${Math.random() * 100}%`);
+    sparkle.style.setProperty("--y", `${Math.random() * 100}%`);
+    sparkle.style.setProperty("--delay", `${Math.random() * 0.45}s`);
+    sparkleField.append(sparkle);
+  }
+
+  const popup = create("div", "victory-popup", "");
+  popup.append(
+    create("strong", "", "Você arrasa muito!!!"),
+    create("p", "", "Maldito dom...")
+  );
+  const close = create("button", "note-button secondary", "Fechar");
+  close.type = "button";
+  close.addEventListener("click", () => overlay.remove());
+  popup.append(close);
+
+  overlay.append(sparkleField, popup);
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) overlay.remove();
+  });
+  document.body.append(overlay);
 }
 
 function renderMilestones() {

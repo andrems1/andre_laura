@@ -1,5 +1,5 @@
 window.CHAT_STORY = {
-  "generatedAt": "08/06/2026 23:20",
+  "generatedAt": "09/06/2026 10:46",
   "sourceZip": "conversa-whatsapp.zip",
   "participants": [
     "Eu",
