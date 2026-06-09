@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>André + Laura</title>
+    <meta
+      name="description"
+      content="Um presente do André para a Laura, feito com conversas, carinho, lembranças e um cronômetro de namoro."
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Início">A+L</a>
+      <nav class="nav" aria-label="Seções">
+        <a href="#placar">Chat</a>
+        <a href="#versiculo">Palavra</a>
+        <a href="#resumo">Resumo</a>
+        <a href="#frases">Frases</a>
+        <a href="#assuntos">Assuntos</a>
+        <a href="#palavras">Palavras</a>
+        <a href="#ritmo">Ritmo</a>
+        <a href="#fotos">Fotos</a>
+        <a href="#marcos">Marcos</a>
+        <a href="#carta">Carta</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="heart-field" aria-hidden="true">
+          <span>♥</span>
+          <span>♡</span>
+          <span>♥</span>
+          <span>♡</span>
+          <span>♥</span>
+          <span>♡</span>
+        </div>
+        <div class="hero-layout">
+          <div class="hero-content">
+            <p class="eyebrow">Amor, isso aqui é para você</p>
+            <h1 id="heroTitle">André + Laura</h1>
+            <p class="hero-copy" id="heroSubtitle">Carregando nosso cantinho...</p>
+            <div class="hero-stats" id="headlineStats" aria-label="Resumo principal"></div>
+          </div>
+          <div class="hero-photo" id="heroPhoto" aria-label="Carrossel das nossas fotos"></div>
+        </div>
+      </section>
+
+      <section class="section timer-section">
+        <div class="section-heading">
+          <p class="eyebrow">Desde 21/04/2026 às 18:52</p>
+          <h2>O tempo desde que a gente começou a namorar</h2>
+        </div>
+        <div class="timer-grid" id="loveTimer" aria-label="Cronômetro de namoro"></div>
+      </section>
+
+      <section class="section verse-section" id="versiculo">
+        <div class="section-heading">
+          <p class="eyebrow">A fonte de tudo</p>
+          <h2>Amando primeiro a Deus</h2>
+        </div>
+        <div class="verse-wrapper">
+          <article class="verse-card" aria-live="polite">
+            <div class="verse-cross" aria-hidden="true">✦</div>
+            <blockquote class="verse-text" id="verseText"></blockquote>
+            <cite class="verse-ref" id="verseRef"></cite>
+          </article>
+          <p class="verse-note">
+            Antes de tudo que está nesse site, é a Deus que a gente olha.
+            É dele que vem a capacidade de amar, e o que existe entre a gente
+            só faz sentido quando tem Ele no centro.
+          </p>
+          <button class="note-button verse-button" id="verseButton" type="button">Próximo versículo</button>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="placar">
+        <div class="section-heading">
+          <p class="eyebrow">O que ficou registrado</p>
+          <h2>Um monte de conversa que a gente chamou de nossa</h2>
+        </div>
+        <div class="split">
+          <div class="author-grid" id="authorCards"></div>
+          <div class="panel love-panel">
+            <h3>Dois jeitos de cuidar da mesma conversa</h3>
+            <div class="balance" id="messageBalance"></div>
+            <div class="mini-stats" id="replyStats"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="resumo">
+        <div class="section-heading">
+          <p class="eyebrow">Olha o que eu fui achando por aí</p>
+          <h2>Tanta coisa aconteceu desde dezembro</h2>
+        </div>
+        <div class="stat-grid" id="storyStats"></div>
+        <div class="sticker-section panel">
+          <div>
+            <p class="eyebrow">Figurinhas favoritas</p>
+            <h3>As que mais apareceram entre a gente</h3>
+          </div>
+          <div class="sticker-grid" id="stickerFavorites"></div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="frases">
+        <div class="section-heading">
+          <p class="eyebrow">Palavras que valiam repetir</p>
+          <h2>As coisas que a gente falava todo dia</h2>
+        </div>
+        <div class="phrase-grid" id="phraseGrid"></div>
+      </section>
+
+      <section class="section section-alt" id="assuntos">
+        <div class="section-heading">
+          <p class="eyebrow">Nada faltou de assunto entre a gente</p>
+          <h2>A vida da gente não cabia numa só conversa</h2>
+        </div>
+        <div class="two-columns">
+          <div class="panel">
+            <h3>Nossos assuntos campeões</h3>
+            <div class="topic-list" id="topicList"></div>
+          </div>
+          <div class="panel sticker-panel">
+            <h3>O que eu gosto nisso</h3>
+            <p class="topic-note">
+              O bonito não é só falar muito. É ver que, no meio da rotina, da fé, dos planos, da comida,
+              dos cuidados e das bobagens, a gente foi construindo um lugar nosso.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="palavras">
+        <div class="section-heading">
+          <p class="eyebrow">O que não faltou no meio da conversa</p>
+          <h2>As palavras que ficavam voltando</h2>
+        </div>
+        <div class="panel words-panel">
+          <div class="word-cloud" id="wordCloud"></div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="ritmo">
+        <div class="section-heading">
+          <p class="eyebrow">Quando a gente estava mais ligada</p>
+          <h2>Tinha hora que a conversa não parava</h2>
+        </div>
+        <div class="timeline-layout">
+          <div class="panel wide-panel">
+            <h3>Mensagens por mês</h3>
+            <div class="bar-chart" id="monthlyChart"></div>
+          </div>
+          <div class="panel">
+            <h3>Dias mais cheios</h3>
+            <div class="busiest-list" id="busiestDays"></div>
+          </div>
+        </div>
+        <div class="two-columns compact-top">
+          <div class="panel">
+            <h3>Horários favoritos</h3>
+            <div class="hour-grid" id="hourGrid"></div>
+          </div>
+          <div class="panel">
+            <h3>Dias da semana na conversa</h3>
+            <div class="weekday-list" id="weekdayList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="fotos">
+        <div class="section-heading">
+          <p class="eyebrow">Nossas fotos</p>
+          <h2>Um cantinho para guardar o que a gente viveu</h2>
+        </div>
+        <div class="photo-gallery-grid" id="photoGallery" aria-label="Galeria de fotos"></div>
+        <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto em tela cheia">
+          <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">×</button>
+          <button class="lightbox-prev" id="lightboxPrev" aria-label="Foto anterior">‹</button>
+          <figure class="lightbox-figure">
+            <img id="lightboxImg" src="" alt="" />
+            <figcaption id="lightboxCaption"></figcaption>
+          </figure>
+          <button class="lightbox-next" id="lightboxNext" aria-label="Próxima foto">›</button>
+        </div>
+        <div class="memory-only-layout">
+          <div class="panel memory-panel">
+            <h3>Jogo de memória</h3>
+            <p class="soft-copy" id="memoryStatus">Quando as fotos entrarem, esse jogo vira oficialmente nosso.</p>
+            <div class="memory-board" id="memoryBoard"></div>
+            <button class="note-button secondary" id="restartMemory" type="button">Embaralhar</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="carta">
+        <div class="section-heading">
+          <p class="eyebrow">Do André, para a Laura</p>
+          <h2>Uma cartinha nossa</h2>
+        </div>
+        <div class="letter-wrapper">
+          <article class="letter-card">
+            <p class="letter-text">
+              Amor,<br><br>
+
+              Eu não sei muito bem como começar isso, mas vou tentar.<br><br>
+
+              Eu fico pensando nas mensagens de madrugada, nos áudios
+              que eu mandava quando não conseguia dormir, nas vezes que
+              a gente ficou trocando figurinha por meia hora só porque
+              era bom estar junto, mesmo que por texto.<br><br>
+
+              Esse site inteiro é uma tentativa de mostrar que eu presto
+              atenção nas coisas da gente. Nos dias que conversamos mais,
+              nas horas que você aparecia, nas palavras que ficavam
+              voltando. Você vale cada detalhe desse aqui.<br><br>
+
+              Com amor,<br>
+              <span class="letter-signature">André</span>
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="marcos">
+        <div class="section-heading">
+          <p class="eyebrow">As datas que eu quis guardar</p>
+          <h2>Coisas que não vão sair da minha cabeça</h2>
+        </div>
+        <div class="milestone-list" id="milestones"></div>
+      </section>
+
+      <section class="note-section">
+        <div>
+          <p class="eyebrow">Um bilhetinho meu</p>
+          <h2>Uma frase nova para você sorrir</h2>
+        </div>
+        <p class="love-note" id="loveNote"></p>
+        <button class="note-button" id="noteButton" type="button">Me dá outro bilhetinho</button>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Feito por mim, para você, amor.</span>
+      <span id="generatedAt"></span>
+    </footer>
+  </body>
+</html>
