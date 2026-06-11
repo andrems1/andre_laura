@@ -64,10 +64,13 @@ let matchedCards = 0;
 let currentNote = "";
 let currentVerseIndex = -1;
 let lightboxIndex = 0;
+let lastFocusedElement = null;
 let victoryShown = false;
 let memoryPreviewing = false;
 let memoryStarted = false;
 let flipToken = "";
+let galleryExpanded = false;
+let lightboxListenersReady = false;
 
 function setText(selector, value) {
   const element = $(selector);
@@ -104,6 +107,10 @@ function duration(minutes) {
 
 function topPhrase(key) {
   return data.phrases.find((item) => item.name === key)?.count || 0;
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 }
 
 function renderHero() {
@@ -185,50 +192,6 @@ function renderVerse() {
 
   textEl.classList.add("is-changing");
   window.setTimeout(applyVerse, 180);
-}
-
-function renderAuthors() {
-  const total = data.summary.totalMessages;
-  const cards = data.byAuthor.map((author) => {
-    const card = create("article", "author-card");
-    const line =
-      author.name === "Eu"
-        ? "Eu tentando continuar perto, puxar assunto e arrumar qualquer motivo para falar com você."
-        : "Você aparecendo no meio do meu dia e deixando tudo mais leve, mais bonito e mais nosso.";
-    card.append(
-      create("div", "name", author.name),
-      create("div", "count", number(author.messages)),
-      create("p", "caption", `${percent(author.messages, total)}% da conversa. ${line}`)
-    );
-    return card;
-  });
-  $("#authorCards").replaceChildren(...cards);
-
-  const track = create("div", "balance-track");
-  data.byAuthor.forEach((author) => {
-    const piece = create("div", "balance-segment", `${percent(author.messages, total)}%`);
-    piece.style.width = `${percent(author.messages, total)}%`;
-    track.append(piece);
-  });
-
-  const labels = create("div", "balance-labels");
-  data.byAuthor.forEach((author) => {
-    labels.append(create("span", "", `${author.name}: ${number(author.messages)} mensagens`));
-  });
-  $("#messageBalance").replaceChildren(track, labels);
-
-  const replyRows = data.byAuthor.map((author) => {
-    const row = create("div", "mini-stat");
-    const label =
-      author.name === "Eu"
-        ? "Quanto tempo eu demorava para aparecer"
-        : "Quanto tempo você me deixava esperando";
-    row.append(create("span", "", label), create("strong", "", duration(author.replyMedianMinutes)));
-    return row;
-  });
-  const turns = create("div", "mini-stat");
-  turns.append(create("span", "", "Idas e vindas da nossa conversa"), create("strong", "", number(data.summary.conversationTurns)));
-  $("#replyStats").replaceChildren(...replyRows, turns);
 }
 
 function renderStoryStats() {
@@ -415,6 +378,8 @@ function renderHeroCarousel() {
   image.src = photo.src;
   image.alt = photo.title || "Foto nossa";
   image.loading = photoIndex === 0 ? "eager" : "lazy";
+  image.decoding = "async";
+  image.fetchPriority = photoIndex === 0 ? "high" : "auto";
   const caption =
     photo.title && photo.title !== `Foto ${photoIndex + 1}`
       ? photo.title
@@ -436,7 +401,7 @@ function renderHeroCarousel() {
   setupHeroSwipe(stage, photos.length);
 
   window.clearInterval(window._carouselTimer);
-  if (photos.length > 1) {
+  if (photos.length > 1 && !prefersReducedMotion()) {
     window._carouselTimer = window.setInterval(() => {
       photoIndex += 1;
       renderHeroCarousel();
@@ -444,7 +409,7 @@ function renderHeroCarousel() {
   }
   stage.onmouseenter = () => window.clearInterval(window._carouselTimer);
   stage.onmouseleave = () => {
-    if (photos.length > 1) {
+    if (photos.length > 1 && !prefersReducedMotion()) {
       window._carouselTimer = window.setInterval(() => {
         photoIndex += 1;
         renderHeroCarousel();
@@ -496,8 +461,8 @@ function renderPhotoGallery() {
     return;
   }
 
-  grid.replaceChildren(
-    ...photos.map((photo, index) => {
+  const visiblePhotos = galleryExpanded ? photos : photos.slice(0, 4);
+  const items = visiblePhotos.map((photo, index) => {
       const button = create("button", "gallery-item", "");
       button.type = "button";
       button.setAttribute("aria-label", `Abrir ${photo.title || `Foto ${index + 1}`}`);
@@ -505,49 +470,71 @@ function renderPhotoGallery() {
       image.src = photo.src;
       image.alt = photo.title || `Foto ${index + 1}`;
       image.loading = "lazy";
+      image.decoding = "async";
       button.append(image);
       button.addEventListener("click", () => openLightbox(index));
       return button;
-    })
-  );
+    });
 
-  const lightbox = $("#lightbox");
-  $("#lightboxClose")?.addEventListener("click", closeLightbox);
-  $("#lightboxPrev")?.addEventListener("click", () => {
-    lightboxIndex = (lightboxIndex - 1 + photos.length) % photos.length;
-    updateLightbox();
-  });
-  $("#lightboxNext")?.addEventListener("click", () => {
-    lightboxIndex = (lightboxIndex + 1) % photos.length;
-    updateLightbox();
-  });
-  lightbox?.addEventListener("click", (event) => {
-    if (event.target === lightbox) closeLightbox();
-  });
-  document.addEventListener("keydown", (event) => {
-    if (!lightbox?.classList.contains("open")) return;
-    if (event.key === "Escape") closeLightbox();
-    if (event.key === "ArrowLeft") {
+  if (photos.length > visiblePhotos.length) {
+    const more = create("button", "gallery-more", `Ver todas as ${photos.length} fotos`);
+    more.type = "button";
+    more.addEventListener("click", () => {
+      galleryExpanded = true;
+      renderPhotoGallery();
+    });
+    items.push(more);
+  }
+
+  grid.replaceChildren(...items);
+
+  if (!lightboxListenersReady) {
+    const lightbox = $("#lightbox");
+    $("#lightboxClose")?.addEventListener("click", closeLightbox);
+    $("#lightboxPrev")?.addEventListener("click", () => {
       lightboxIndex = (lightboxIndex - 1 + photos.length) % photos.length;
       updateLightbox();
-    }
-    if (event.key === "ArrowRight") {
+    });
+    $("#lightboxNext")?.addEventListener("click", () => {
       lightboxIndex = (lightboxIndex + 1) % photos.length;
       updateLightbox();
-    }
-  });
+    });
+    lightbox?.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox?.classList.contains("open")) return;
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "Tab") trapLightboxFocus(event);
+      if (event.key === "ArrowLeft") {
+        lightboxIndex = (lightboxIndex - 1 + photos.length) % photos.length;
+        updateLightbox();
+      }
+      if (event.key === "ArrowRight") {
+        lightboxIndex = (lightboxIndex + 1) % photos.length;
+        updateLightbox();
+      }
+    });
+    lightboxListenersReady = true;
+  }
 }
 
 function openLightbox(index) {
+  lastFocusedElement = document.activeElement;
   lightboxIndex = index;
   updateLightbox();
   $("#lightbox")?.classList.add("open");
   document.body.style.overflow = "hidden";
+  $("#lightboxClose")?.focus();
 }
 
 function closeLightbox() {
   $("#lightbox")?.classList.remove("open");
   document.body.style.overflow = "";
+  const image = $("#lightboxImg");
+  if (image) image.removeAttribute("src");
+  lastFocusedElement?.focus?.();
+  lastFocusedElement = null;
 }
 
 function updateLightbox() {
@@ -559,6 +546,7 @@ function updateLightbox() {
   if (image) {
     image.src = photo.src;
     image.alt = photo.title || "Foto";
+    image.decoding = "async";
   }
   if (caption) {
     caption.textContent =
@@ -569,7 +557,30 @@ function updateLightbox() {
 }
 
 function shuffle(items) {
-  return [...items].sort(() => Math.random() - 0.5);
+  const copy = [...items];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+  }
+  return copy;
+}
+
+function trapLightboxFocus(event) {
+  const lightbox = $("#lightbox");
+  if (!lightbox) return;
+  const focusable = [...lightbox.querySelectorAll("button, [href], [tabindex]:not([tabindex='-1'])")].filter(
+    (element) => !element.disabled && element.offsetParent !== null
+  );
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 function setupMemoryGame() {
@@ -660,6 +671,7 @@ function renderMemoryBoard() {
         const image = create("img");
         image.src = card.src;
         image.alt = card.title || "Foto do jogo";
+        image.decoding = "async";
         button.append(image);
       } else {
         button.textContent = "♥";
