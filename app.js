@@ -3,6 +3,7 @@ const data = window.CHAT_STORY;
 const fmt = new Intl.NumberFormat("pt-BR");
 const shortFmt = new Intl.NumberFormat("pt-BR", { notation: "compact", maximumFractionDigits: 1 });
 const START_DATE = new Date("2026-04-21T18:52:00-03:00");
+const CAROUSEL_INTERVAL = 3200;
 const BIBLE_VERSES = [
   {
     text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.",
@@ -423,6 +424,7 @@ function renderHeroCarousel() {
   const progress = create("div", "hero-carousel-progress", "");
   progress.setAttribute("aria-label", `${photoIndex + 1} de ${photos.length}`);
   progress.style.setProperty("--photo-count", photos.length);
+  progress.style.setProperty("--story-duration", `${CAROUSEL_INTERVAL}ms`);
   progress.replaceChildren(
     ...photos.map((_, index) => {
       const item = create("span", index === photoIndex ? "active" : "");
@@ -438,7 +440,7 @@ function renderHeroCarousel() {
     window._carouselTimer = window.setInterval(() => {
       photoIndex += 1;
       renderHeroCarousel();
-    }, 5000);
+    }, CAROUSEL_INTERVAL);
   }
   stage.onmouseenter = () => window.clearInterval(window._carouselTimer);
   stage.onmouseleave = () => {
@@ -446,7 +448,7 @@ function renderHeroCarousel() {
       window._carouselTimer = window.setInterval(() => {
         photoIndex += 1;
         renderHeroCarousel();
-      }, 5000);
+      }, CAROUSEL_INTERVAL);
     }
   };
 }
@@ -592,6 +594,7 @@ function setupMemoryGame() {
   if (startButton) {
     startButton.disabled = false;
     startButton.textContent = "Começar";
+    startButton.hidden = true;
   }
   memoryCards = shuffle([...photos, ...photos].map((photo, index) => ({ ...photo, uid: `${photo.src}-${index}`, matched: false, open: false })));
   setText("#memoryStatus", "Clique em começar. Eu mostro as fotos rapidinho e depois é contigo.");
@@ -613,6 +616,7 @@ function startMemoryGame() {
   if (startButton) {
     startButton.disabled = true;
     startButton.textContent = "Memoriza...";
+    startButton.hidden = true;
   }
   setText("#memoryStatus", "Olha bem, amor. As lembranças já vão virar de costas.");
   renderMemoryBoard();
@@ -626,7 +630,8 @@ function startMemoryGame() {
     memoryStarted = true;
     if (startButton) {
       startButton.disabled = false;
-      startButton.textContent = "Recomeçar";
+      startButton.textContent = "Embaralhar";
+      startButton.hidden = false;
     }
     setText("#memoryStatus", "Agora sim: encontre os pares. Cada acerto é uma lembrança.");
     renderMemoryBoard();
@@ -635,6 +640,7 @@ function startMemoryGame() {
 
 function renderMemoryBoard() {
   const board = $("#memoryBoard");
+  const shouldShowStartLayer = !memoryStarted && !memoryPreviewing && memoryCards.length >= 2;
   board.replaceChildren(
     ...memoryCards.map((card, index) => {
       const isVisible = card.open || card.matched;
@@ -662,6 +668,15 @@ function renderMemoryBoard() {
       return button;
     })
   );
+
+  if (shouldShowStartLayer) {
+    const layer = create("div", "memory-start-layer", "");
+    const button = create("button", "memory-start-button", "Começar");
+    button.type = "button";
+    button.addEventListener("click", startMemoryGame);
+    layer.append(button);
+    board.append(layer);
+  }
 }
 
 function flipMemoryCard(index) {
