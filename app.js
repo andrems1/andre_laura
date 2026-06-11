@@ -64,6 +64,9 @@ let currentNote = "";
 let currentVerseIndex = -1;
 let lightboxIndex = 0;
 let victoryShown = false;
+let memoryPreviewing = false;
+let memoryStarted = false;
+let flipToken = "";
 
 function setText(selector, value) {
   const element = $(selector);
@@ -417,27 +420,18 @@ function renderHeroCarousel() {
       : `${photoIndex + 1} de ${photos.length}`;
   figure.append(image, create("figcaption", "", caption));
 
-  const actions = create("div", "hero-carousel-actions");
-  const prev = create("button", "icon-button", "‹");
-  const next = create("button", "icon-button", "›");
-  prev.id = "prevPhoto";
-  next.id = "nextPhoto";
-  prev.type = "button";
-  next.type = "button";
-  prev.setAttribute("aria-label", "Foto anterior");
-  next.setAttribute("aria-label", "Próxima foto");
-  prev.disabled = photos.length < 2;
-  next.disabled = photos.length < 2;
-  prev.addEventListener("click", () => {
-    photoIndex -= 1;
-    renderHeroCarousel();
-  });
-  next.addEventListener("click", () => {
-    photoIndex += 1;
-    renderHeroCarousel();
-  });
-  actions.append(prev, next);
-  stage.replaceChildren(figure, actions);
+  const progress = create("div", "hero-carousel-progress", "");
+  progress.setAttribute("aria-label", `${photoIndex + 1} de ${photos.length}`);
+  progress.style.setProperty("--photo-count", photos.length);
+  progress.replaceChildren(
+    ...photos.map((_, index) => {
+      const item = create("span", index === photoIndex ? "active" : "");
+      item.style.setProperty("--progress", index < photoIndex ? "1" : "0");
+      return item;
+    })
+  );
+  stage.replaceChildren(figure, progress);
+  setupHeroSwipe(stage, photos.length);
 
   window.clearInterval(window._carouselTimer);
   if (photos.length > 1) {
@@ -454,6 +448,39 @@ function renderHeroCarousel() {
         renderHeroCarousel();
       }, 5000);
     }
+  };
+}
+
+function setupHeroSwipe(stage, total) {
+  if (total < 2) return;
+  let startX = 0;
+  let startY = 0;
+  let dragging = false;
+
+  stage.onpointerdown = (event) => {
+    dragging = true;
+    startX = event.clientX;
+    startY = event.clientY;
+    stage.setPointerCapture?.(event.pointerId);
+    window.clearInterval(window._carouselTimer);
+  };
+
+  stage.onpointerup = (event) => {
+    if (!dragging) return;
+    dragging = false;
+    const deltaX = event.clientX - startX;
+    const deltaY = event.clientY - startY;
+    if (Math.abs(deltaX) > 44 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      photoIndex += deltaX < 0 ? 1 : -1;
+      renderHeroCarousel();
+      return;
+    }
+    renderHeroCarousel();
+  };
+
+  stage.onpointercancel = () => {
+    dragging = false;
+    renderHeroCarousel();
   };
 }
 
@@ -545,34 +572,85 @@ function shuffle(items) {
 
 function setupMemoryGame() {
   const board = $("#memoryBoard");
+  const startButton = $("#restartMemory");
   const photos = (data.photos || []).slice(0, 8);
   openedCards = [];
   matchedCards = 0;
   victoryShown = false;
+  memoryPreviewing = false;
+  memoryStarted = false;
+  flipToken = "";
 
   if (photos.length < 2) {
     memoryCards = [];
     board.replaceChildren(...Array.from({ length: 8 }, (_, index) => create("div", "memory-card locked", index % 2 ? "♡" : "♥")));
-    $("#restartMemory").disabled = true;
+    if (startButton) startButton.disabled = true;
     setText("#memoryStatus", "Quando as fotos entrarem, esse jogo vira memória de verdade, não só de baralho.");
     return;
   }
 
-  $("#restartMemory").disabled = false;
+  if (startButton) {
+    startButton.disabled = false;
+    startButton.textContent = "Começar";
+  }
   memoryCards = shuffle([...photos, ...photos].map((photo, index) => ({ ...photo, uid: `${photo.src}-${index}`, matched: false, open: false })));
-  setText("#memoryStatus", "Encontre os pares. Cada acerto é uma lembrança.");
+  setText("#memoryStatus", "Clique em começar. Eu mostro as fotos rapidinho e depois é contigo.");
   renderMemoryBoard();
+}
+
+function startMemoryGame() {
+  const startButton = $("#restartMemory");
+  const photos = (data.photos || []).slice(0, 8);
+  if (photos.length < 2 || memoryPreviewing) return;
+
+  openedCards = [];
+  matchedCards = 0;
+  victoryShown = false;
+  memoryStarted = false;
+  memoryPreviewing = true;
+  flipToken = "";
+  memoryCards = shuffle([...photos, ...photos].map((photo, index) => ({ ...photo, uid: `${photo.src}-${index}`, matched: false, open: true })));
+  if (startButton) {
+    startButton.disabled = true;
+    startButton.textContent = "Memoriza...";
+  }
+  setText("#memoryStatus", "Olha bem, amor. As lembranças já vão virar de costas.");
+  renderMemoryBoard();
+
+  window.setTimeout(() => {
+    memoryCards.forEach((card) => {
+      card.open = false;
+      card.matched = false;
+    });
+    memoryPreviewing = false;
+    memoryStarted = true;
+    if (startButton) {
+      startButton.disabled = false;
+      startButton.textContent = "Recomeçar";
+    }
+    setText("#memoryStatus", "Agora sim: encontre os pares. Cada acerto é uma lembrança.");
+    renderMemoryBoard();
+  }, 1800);
 }
 
 function renderMemoryBoard() {
   const board = $("#memoryBoard");
   board.replaceChildren(
     ...memoryCards.map((card, index) => {
-      const button = create("button", `memory-card ${card.open || card.matched ? "open" : ""}`, "");
+      const isVisible = card.open || card.matched;
+      const classes = [
+        "memory-card",
+        isVisible ? "open" : "",
+        card.uid === flipToken ? "is-flipping" : "",
+        !memoryStarted && !memoryPreviewing ? "not-started" : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+      const button = create("button", classes, "");
       button.type = "button";
-      button.disabled = card.matched;
-      button.setAttribute("aria-label", card.open || card.matched ? "Carta aberta" : "Carta fechada");
-      if (card.open || card.matched) {
+      button.disabled = card.matched || memoryPreviewing || !memoryStarted;
+      button.setAttribute("aria-label", isVisible ? "Carta aberta" : "Carta fechada");
+      if (isVisible) {
         const image = create("img");
         image.src = card.src;
         image.alt = card.title || "Foto do jogo";
@@ -588,11 +666,15 @@ function renderMemoryBoard() {
 
 function flipMemoryCard(index) {
   const card = memoryCards[index];
-  if (!card || card.open || card.matched || openedCards.length >= 2) return;
+  if (!memoryStarted || memoryPreviewing || !card || card.open || card.matched || openedCards.length >= 2) return;
 
   card.open = true;
+  flipToken = card.uid;
   openedCards.push(index);
   renderMemoryBoard();
+  window.setTimeout(() => {
+    if (flipToken === card.uid) flipToken = "";
+  }, 460);
 
   if (openedCards.length !== 2) return;
   const [firstIndex, secondIndex] = openedCards;
@@ -773,7 +855,6 @@ function boot() {
   renderLoveTimer();
   window.setInterval(renderLoveTimer, 1000);
   renderVerse();
-  renderAuthors();
   renderStoryStats();
   renderPhrases();
   renderTopics();
@@ -787,7 +868,7 @@ function boot() {
 
   $("#verseButton")?.addEventListener("click", renderVerse);
   $("#noteButton")?.addEventListener("click", renderNote);
-  $("#restartMemory")?.addEventListener("click", setupMemoryGame);
+  $("#restartMemory")?.addEventListener("click", startMemoryGame);
   setupActiveNav();
   setupRevealAnimations();
 }
