@@ -1,59 +1,59 @@
 window.CHAT_STORY = {
-  "generatedAt": "09/06/2026 10:46",
+  "generatedAt": "12/06/2026 00:44",
   "sourceZip": "conversa-whatsapp.zip",
   "participants": [
     "Eu",
     "Você"
   ],
   "summary": {
-    "totalMessages": 32201,
-    "textMessages": 27803,
-    "wordCount": 71956,
-    "charCount": 833015,
+    "totalMessages": 33453,
+    "textMessages": 28851,
+    "wordCount": 74346,
+    "charCount": 860765,
     "firstDate": "27/12/2025",
-    "lastDate": "07/06/2026",
-    "activeDays": 163,
-    "totalDays": 163,
-    "avgPerActiveDay": 197.6,
-    "longestStreak": 163,
-    "conversationTurns": 5082,
-    "laughMessages": 5079,
+    "lastDate": "11/06/2026",
+    "activeDays": 167,
+    "totalDays": 167,
+    "avgPerActiveDay": 200.3,
+    "longestStreak": 167,
+    "conversationTurns": 5280,
+    "laughMessages": 5208,
     "busiestDay": {
       "date": "06/05/2026",
       "count": 472
     },
     "busiestHour": {
       "hour": 22,
-      "count": 2507
+      "count": 2696
     }
   },
   "byAuthor": [
     {
       "name": "Eu",
-      "messages": 16613,
-      "textMessages": 14761,
-      "words": 39224,
-      "avgWords": 2.7,
-      "replyMedianMinutes": 13.0,
+      "messages": 17249,
+      "textMessages": 15293,
+      "words": 40457,
+      "avgWords": 2.6,
+      "replyMedianMinutes": 12.0,
       "media": {
-        "audio": 855,
-        "sticker": 590,
-        "image": 387,
+        "audio": 908,
+        "sticker": 632,
+        "image": 395,
         "document": 2,
-        "video": 18
+        "video": 19
       }
     },
     {
       "name": "Você",
-      "messages": 15588,
-      "textMessages": 13042,
-      "words": 31955,
-      "avgWords": 2.5,
+      "messages": 16204,
+      "textMessages": 13558,
+      "words": 33112,
+      "avgWords": 2.4,
       "replyMedianMinutes": 16.0,
       "media": {
-        "sticker": 753,
-        "audio": 1548,
-        "image": 224,
+        "sticker": 787,
+        "audio": 1610,
+        "image": 228,
         "video": 13,
         "omitted": 8
       }
@@ -61,11 +61,11 @@ window.CHAT_STORY = {
   ],
   "media": {
     "totals": {
-      "sticker": 1343,
-      "audio": 2403,
-      "image": 611,
+      "sticker": 1419,
+      "audio": 2518,
+      "image": 623,
       "document": 2,
-      "video": 31,
+      "video": 32,
       "omitted": 8
     },
     "labels": {
@@ -80,15 +80,15 @@ window.CHAT_STORY = {
   "phrases": [
     {
       "name": "Eu te amo",
-      "count": 197
+      "count": 211
     },
     {
       "name": "Bom dia",
-      "count": 304
+      "count": 312
     },
     {
       "name": "Boa noite",
-      "count": 87
+      "count": 98
     },
     {
       "name": "Saudade",
@@ -96,151 +96,151 @@ window.CHAT_STORY = {
     },
     {
       "name": "Amor",
-      "count": 1661
+      "count": 1850
     },
     {
       "name": "Risadas compactadas",
-      "count": 5079
+      "count": 5208
     }
   ],
   "topics": [
     {
       "name": "Carinho, saudade e nós dois",
       "icon": "♥",
-      "count": 2672
+      "count": 2905
     },
     {
       "name": "Igreja, fé e encontros",
       "icon": "✦",
-      "count": 949
+      "count": 965
     },
     {
       "name": "Planos para se ver",
       "icon": "↗",
-      "count": 774
+      "count": 798
     },
     {
       "name": "Faculdade, trabalho e rotina",
       "icon": "✎",
-      "count": 1467
+      "count": 1538
     },
     {
       "name": "Família e amigos",
       "icon": "♡",
-      "count": 785
+      "count": 811
     },
     {
       "name": "Comida, café e lanchinhos",
       "icon": "☕",
-      "count": 433
+      "count": 448
     },
     {
       "name": "Bom dia, boa noite e cuidado",
       "icon": "☾",
-      "count": 670
+      "count": 703
     },
     {
       "name": "Filmes, música e diversão",
       "icon": "♪",
-      "count": 255
+      "count": 258
     }
   ],
   "topWords": [
     {
       "word": "amor",
-      "count": 2304
+      "count": 2482
     },
     {
       "word": "gente",
-      "count": 495
+      "count": 503
     },
     {
       "word": "aula",
-      "count": 460
+      "count": 488
     },
     {
       "word": "casa",
-      "count": 399
+      "count": 418
     },
     {
       "word": "ver",
-      "count": 351
+      "count": 366
     },
     {
       "word": "missa",
-      "count": 351
-    },
-    {
-      "word": "conta",
-      "count": 292
+      "count": 357
     },
     {
       "word": "certo",
-      "count": 289
+      "count": 305
     },
     {
-      "word": "deve",
-      "count": 281
-    },
-    {
-      "word": "sei",
-      "count": 280
+      "word": "conta",
+      "count": 302
     },
     {
       "word": "assim",
-      "count": 280
+      "count": 292
     },
     {
-      "word": "sao",
-      "count": 278
+      "word": "sei",
+      "count": 285
+    },
+    {
+      "word": "deve",
+      "count": 284
     },
     {
       "word": "meio",
-      "count": 274
+      "count": 283
+    },
+    {
+      "word": "sao",
+      "count": 283
     },
     {
       "word": "legal",
-      "count": 271
+      "count": 280
     },
     {
       "word": "tenho",
-      "count": 267
+      "count": 278
     },
     {
       "word": "nada",
-      "count": 264
+      "count": 277
     },
     {
       "word": "oii",
-      "count": 254
+      "count": 270
     },
     {
       "word": "tempo",
-      "count": 248
-    },
-    {
-      "word": "fui",
-      "count": 247
+      "count": 261
     },
     {
       "word": "dar",
-      "count": 246
+      "count": 257
     },
     {
-      "word": "nunca",
-      "count": 233
+      "word": "fui",
+      "count": 253
     },
     {
       "word": "sempre",
-      "count": 233
+      "count": 244
     },
     {
-      "word": "aq",
-      "count": 231
+      "word": "nunca",
+      "count": 240
     },
     {
       "word": "trabalho",
-      "count": 227
+      "count": 237
+    },
+    {
+      "word": "aq",
+      "count": 232
     }
   ],
   "timeline": {
@@ -1058,7 +1058,27 @@ window.CHAT_STORY = {
       {
         "date": "2026-06-07",
         "label": "07/06/2026",
-        "count": 144
+        "count": 204
+      },
+      {
+        "date": "2026-06-08",
+        "label": "08/06/2026",
+        "count": 304
+      },
+      {
+        "date": "2026-06-09",
+        "label": "09/06/2026",
+        "count": 303
+      },
+      {
+        "date": "2026-06-10",
+        "label": "10/06/2026",
+        "count": 360
+      },
+      {
+        "date": "2026-06-11",
+        "label": "11/06/2026",
+        "count": 225
       }
     ],
     "monthly": [
@@ -1088,13 +1108,13 @@ window.CHAT_STORY = {
       },
       {
         "month": "jun/26",
-        "count": 1781
+        "count": 3033
       }
     ],
     "hours": [
       {
         "hour": 0,
-        "count": 330
+        "count": 404
       },
       {
         "hour": 1,
@@ -1118,93 +1138,93 @@ window.CHAT_STORY = {
       },
       {
         "hour": 6,
-        "count": 705
+        "count": 725
       },
       {
         "hour": 7,
-        "count": 1451
+        "count": 1547
       },
       {
         "hour": 8,
-        "count": 2049
+        "count": 2104
       },
       {
         "hour": 9,
-        "count": 1791
+        "count": 1810
       },
       {
         "hour": 10,
-        "count": 1854
+        "count": 1937
       },
       {
         "hour": 11,
-        "count": 1746
+        "count": 1806
       },
       {
         "hour": 12,
-        "count": 2238
+        "count": 2281
       },
       {
         "hour": 13,
-        "count": 1920
+        "count": 1983
       },
       {
         "hour": 14,
-        "count": 1564
+        "count": 1606
       },
       {
         "hour": 15,
-        "count": 1431
+        "count": 1518
       },
       {
         "hour": 16,
-        "count": 1875
+        "count": 1928
       },
       {
         "hour": 17,
-        "count": 1318
+        "count": 1379
       },
       {
         "hour": 18,
-        "count": 2301
+        "count": 2400
       },
       {
         "hour": 19,
-        "count": 1393
+        "count": 1442
       },
       {
         "hour": 20,
-        "count": 1784
+        "count": 1852
       },
       {
         "hour": 21,
-        "count": 2280
+        "count": 2364
       },
       {
         "hour": 22,
-        "count": 2507
+        "count": 2696
       },
       {
         "hour": 23,
-        "count": 1459
+        "count": 1466
       }
     ],
     "weekdays": [
       {
         "weekday": "segunda",
-        "count": 4624
+        "count": 4928
       },
       {
         "weekday": "terça",
-        "count": 5362
+        "count": 5665
       },
       {
         "weekday": "quarta",
-        "count": 5101
+        "count": 5461
       },
       {
         "weekday": "quinta",
-        "count": 4323
+        "count": 4548
       },
       {
         "weekday": "sexta",
@@ -1216,7 +1236,7 @@ window.CHAT_STORY = {
       },
       {
         "weekday": "domingo",
-        "count": 3620
+        "count": 3680
       }
     ],
     "busiestDays": [
@@ -1280,7 +1300,7 @@ window.CHAT_STORY = {
     {
       "title": "A hora que mais parece nossa",
       "date": "22:00",
-      "body": "2.507 mensagens nessa faixa de horário."
+      "body": "2.696 mensagens nessa faixa de horário."
     }
   ],
   "photos": [
@@ -1320,36 +1340,36 @@ window.CHAT_STORY = {
   "topStickers": [
     {
       "src": "assets/figurinhas/figurinha-01-stk-20251127-wa0014.webp",
-      "count": 81,
+      "count": 85,
       "mainAuthor": "Eu",
       "byAuthor": {
-        "Eu": 81
+        "Eu": 85
       }
     },
     {
       "src": "assets/figurinhas/figurinha-02-stk-20251230-wa0105.webp",
-      "count": 71,
+      "count": 73,
       "mainAuthor": "Você",
       "byAuthor": {
-        "Você": 71
+        "Você": 73
       }
     },
     {
-      "src": "assets/figurinhas/figurinha-03-stk-20240423-wa0065.webp",
-      "count": 55,
+      "src": "assets/figurinhas/figurinha-03-stk-20250811-wa0087.webp",
+      "count": 59,
       "mainAuthor": "Eu",
       "byAuthor": {
-        "Eu": 40,
-        "Você": 15
+        "Eu": 55,
+        "Você": 4
       }
     },
     {
-      "src": "assets/figurinhas/figurinha-04-stk-20250811-wa0087.webp",
-      "count": 53,
+      "src": "assets/figurinhas/figurinha-04-stk-20240423-wa0065.webp",
+      "count": 58,
       "mainAuthor": "Eu",
       "byAuthor": {
-        "Eu": 51,
-        "Você": 2
+        "Eu": 42,
+        "Você": 16
       }
     },
     {
@@ -1362,26 +1382,26 @@ window.CHAT_STORY = {
     },
     {
       "src": "assets/figurinhas/figurinha-06-stk-20240916-wa0202.webp",
-      "count": 38,
+      "count": 40,
       "mainAuthor": "Eu",
       "byAuthor": {
-        "Eu": 38
+        "Eu": 40
       }
     },
     {
       "src": "assets/figurinhas/figurinha-07-stk-20260213-wa0078.webp",
-      "count": 35,
+      "count": 38,
       "mainAuthor": "Você",
       "byAuthor": {
-        "Você": 35
+        "Você": 38
       }
     },
     {
       "src": "assets/figurinhas/figurinha-08-stk-20260227-wa0030.webp",
-      "count": 34,
+      "count": 37,
       "mainAuthor": "Eu",
       "byAuthor": {
-        "Eu": 34
+        "Eu": 37
       }
     }
   ]

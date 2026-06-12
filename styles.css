@@ -1049,27 +1049,6 @@ h3 {
   object-fit: cover;
 }
 
-.gallery-more {
-  display: inline-flex;
-  min-height: 48px;
-  grid-column: 1 / -1;
-  align-items: center;
-  justify-content: center;
-  padding: 0.8rem 1rem;
-  border: 1px solid rgba(219, 234, 254, 0.24);
-  border-radius: 8px;
-  background: linear-gradient(135deg, rgba(79, 140, 255, 0.88), rgba(139, 92, 246, 0.9));
-  color: #ffffff;
-  cursor: pointer;
-  font-weight: 900;
-  box-shadow: 0 16px 34px rgba(79, 140, 255, 0.22);
-}
-
-.gallery-more:hover {
-  filter: saturate(1.08);
-  transform: translateY(-1px);
-}
-
 .lightbox {
   position: fixed;
   z-index: 100;

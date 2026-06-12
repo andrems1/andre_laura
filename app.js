@@ -69,7 +69,6 @@ let victoryShown = false;
 let memoryPreviewing = false;
 let memoryStarted = false;
 let flipToken = "";
-let galleryExpanded = false;
 let lightboxListenersReady = false;
 
 function setText(selector, value) {
@@ -117,14 +116,14 @@ function renderHero() {
   setText("#heroTitle", "André + Laura");
   setText(
     "#heroSubtitle",
-    "Amor, fiz esse cantinho para guardar a gente. Cada número aqui tem uma história por trás: uma mensagem às 22h, um áudio que foi mais fácil do que digitar, uma risada que eu não consigo descrever. Espero que você curta."
+    "Amor, fiz esse cantinho para guardar um pouquinho da nossa história. Cada mensagem, cada um áudio, cada encontro, cada risada que eu não consigo descrever. Espero que você goste."
   );
 
   const stats = [
-    [number(data.summary.totalMessages), "Mensagens nossas"],
-    [number(data.summary.activeDays), "Dias de conversa"],
+    [number(data.summary.totalMessages), "Mensagens"],
+    [number(data.summary.activeDays), "Dias conversando"],
     [number(data.media.totals.audio || 0), "Áudios enviados"],
-    [number(topPhrase("Eu te amo")), "Vezes falando eu te amo"],
+    [number(topPhrase("Eu te amo")), 'Vezes que falamos "eu te amo"'],
   ];
 
   $("#headlineStats").replaceChildren(
@@ -196,14 +195,12 @@ function renderVerse() {
 
 function renderStoryStats() {
   const stats = [
-    [number(data.summary.totalMessages), "Mensagens que viraram história"],
-    [number(data.summary.activeDays), "Dias sem perder o fio da conversa"],
-    [number(data.media.totals.audio || 0), "Áudios que atravessaram a distância"],
-    [number(data.media.totals.sticker || 0), "Figurinhas que disseram o que faltava palavra"],
-    [number(data.summary.laughMessages), "Vezes que eu ri com você"],
-    [number(data.summary.longestStreak), "Dias inteiros sem deixar de conversar"],
-    [data.summary.busiestDay.date, `${number(data.summary.busiestDay.count)} mensagens no dia mais cheio`],
-    [number(topPhrase("Eu te amo")), "Vezes que eu te amo chegou até você"],
+    [number(data.summary.totalMessages), "Quantas mensagens a gente trocou"],
+    [number(data.summary.activeDays), "Dias conversando"],
+    [number(data.media.totals.audio || 0), "Áudios enviados"],
+    [number(data.media.totals.sticker || 0), "Figurinhas enviadas"],
+    [number(data.summary.laughMessages), "Vezes que rimos com 'kkkkkkkk'"],
+    [number(topPhrase("Eu te amo")), "Vezes que falamos 'eu te amo'"],
   ];
 
   $("#storyStats").replaceChildren(
@@ -264,12 +261,11 @@ function renderPhrases() {
     "Risadas compactadas": "☺",
   };
   const captions = {
-    "Eu te amo": "vezes escritas de verdade",
-    "Bom dia": "manhãs que começaram com você",
-    "Boa noite": "noites fechadas com carinho",
-    Amor: "vezes que esse nome apareceu",
-    Saudade: "vezes que a distância doeu",
-    "Risadas compactadas": "momentos em que eu ri com você",
+    "Eu te amo": "Pra não deixar duvidas",
+    "Bom dia": "Começando o dia bem",
+    "Boa noite": "A vontade e conversar a noite toda",
+    Amor: "Autoexplicativo",
+    Saudade: "Dias que não passavam nunca",
   };
 
   const container = $("#phraseGrid");
@@ -461,8 +457,7 @@ function renderPhotoGallery() {
     return;
   }
 
-  const visiblePhotos = galleryExpanded ? photos : photos.slice(0, 4);
-  const items = visiblePhotos.map((photo, index) => {
+  const items = photos.map((photo, index) => {
       const button = create("button", "gallery-item", "");
       button.type = "button";
       button.setAttribute("aria-label", `Abrir ${photo.title || `Foto ${index + 1}`}`);
@@ -475,16 +470,6 @@ function renderPhotoGallery() {
       button.addEventListener("click", () => openLightbox(index));
       return button;
     });
-
-  if (photos.length > visiblePhotos.length) {
-    const more = create("button", "gallery-more", `Ver todas as ${photos.length} fotos`);
-    more.type = "button";
-    more.addEventListener("click", () => {
-      galleryExpanded = true;
-      renderPhotoGallery();
-    });
-    items.push(more);
-  }
 
   grid.replaceChildren(...items);
 
@@ -713,13 +698,13 @@ function flipMemoryCard(index) {
     matchedCards += 2;
     openedCards = [];
     const finished = matchedCards === memoryCards.length;
-    setText("#memoryStatus", finished ? "Acabou. A gente foi bem, como sempre. ♥" : "Esse eu lembro. ♥");
+    setText("#memoryStatus", finished ? "Acabou!!!Você é incrível. ♥" : "Boaaa!!!. ♥");
     renderMemoryBoard();
     if (finished) showMemoryVictory();
     return;
   }
 
-  setText("#memoryStatus", "Quase. Mas você pode tentar de novo quantas vezes quiser.");
+  setText("#memoryStatus", "Quase!!! Tente de novo.");
   window.setTimeout(() => {
     first.open = false;
     second.open = false;
@@ -779,28 +764,26 @@ function renderMilestones() {
 
 function renderNote() {
   const notes = [
-    "Amor, eu gosto de você de um jeito tão meu que até minhas piadas ruins ficam querendo te impressionar.",
-    "Você é meu pensamento favorito quando o dia fica comum demais.",
-    "Eu não sei explicar direito, mas estar com você deixa o mundo menos pesado e muito mais bonito.",
-    "Amor, você tem esse talento absurdo de virar detalhe pequeno em memória grande.",
-    "Se eu pudesse colocar um alarme no coração, ele tocaria só para lembrar que eu te amo.",
-    "Você é meu tipo favorito de coincidência: daquelas que parecem presente de Deus.",
-    "Amor, eu gosto até do intervalo entre uma mensagem sua e outra, porque fico esperando você aparecer.",
-    "Amor, obrigado por existir do jeitinho que você existe. Eu gosto muito de te amar.",
-    "Você é bonita de um jeito que foto nenhuma explica direito, mas eu vou tentar colocar várias aqui mesmo assim.",
-    "Amor, meu plano secreto é simples: continuar fazendo você sorrir e fingir que isso não é a coisa mais importante do meu dia.",
-    "Você é meu lembrete favorito de que carinho também pode ser casa.",
-    "Amor, eu queria te dar uma coisa que durasse. Então fiz esse cantinho para guardar um pouco da gente.",
-    "Eu amo seu jeito, sua risada, sua presença e até essa saudade que aparece quando você não está perto.",
-    "Se esse site tivesse trilha sonora, seria alguma música boba e feliz tocando enquanto eu penso em você.",
-    "Eu fico pensando o quanto é bom saber que você existe. Não só que você existe pra mim: que você existe, e ponto.",
-    "Você apareceu numa época que eu não tava esperando nada, e trouxe uma coisa que eu não sabia que precisava.",
-    "Toda vez que você manda mensagem de bom dia, eu começo o dia com uma vantagem que ninguém sabe.",
-    "Amor, eu não sei se esse site vai te fazer chorar ou rir. Mas sei que fiz com carinho, e você merecia mais.",
-    "Você tem aquele jeitinho de transformar coisa simples em coisa bonita. Isso é uma das coisas que eu mais admiro em você.",
-    "Se eu pudesse mandar uma mensagem de bom dia pra sempre, mandaria. E esperaria você responder cada uma.",
-    "Amor, esse negócio de nunca ter perdido um dia de conversa, 163 dias, todos eles, não foi acidente.",
-    "Eu gosto muito de como a gente cuida um do outro mesmo pelo texto. Dá pra sentir.",
+"Amor, se cada vez que eu pensasse em você virasse uma linha de código, esse site aqui seria o maior sistema do mundo.",
+"Você é a única pessoa que me faz sorrir para a tela do celular feito um bobo no meio de um lugar lotado.",
+"Laura, você não é Wi-Fi, mas eu sinto uma conexão surreal toda vez que a gente se fala.",
+"Eu juro que tentei achar um defeito em você, mas acho que o seu único defeito é não estar aqui comigo agora.",
+"Amor, minha parte favorita da rotina é aquele momento em que a gente joga conversa fora e eu esqueço do resto.",
+"Não sou previsão do tempo, mas posso garantir que o meu dia esquenta toda vez que você sorri pra mim.",
+"Você é o tipo de notificação que eu nunca vou querer silenciar no meu celular.",
+"Amor, eu gosto tanto de você que até os seus áudios longos eu escuto sem acelerar.",
+"Até as aulas mais chatas e cansativas passam mais rápido quando eu fico lembrando de você.",
+"Eu não ligo se é clichê, mas desde que você chegou, até as músicas românticas antigas começaram a fazer sentido.",
+"Amor, eu queria ser um gatinho, só pra ter a desculpa de passar umas sete vidas inteiras do seu lado.",
+"Você é a desculpa perfeita que o meu cérebro arruma para me distrair de qualquer outra coisa que eu devesse estar fazendo.",
+"De todas as variáveis que existem na minha vida hoje, você é a única que eu faço questão que seja para sempre.",
+"Eu não ligo de morar longe de tudo se, no final das contas, a minha casa for qualquer lugar que tenha você.",
+"Amor, eu não sei fazer mágica, mas desde que a gente começou a se falar, todos os meus problemas parecem menores.",
+"Se o meu abraço fosse um lugar de verdade, eu faria de tudo para você nunca mais querer se mudar de lá.",
+"Você tem o monopólio dos meus pensamentos, e eu não estou nem um pouco a fim de reclamar disso.",
+"Laura, a sua voz podia ser vendida na farmácia como remédio pra acalmar qualquer dia ruim meu.",
+"Amor, eu descobri que a minha música favorita no mundo inteiro é o som da sua risada.",
+"Eu não sei qual é a senha do seu coração, mas prometo que não vou parar de tentar adivinhar."
   ];
   let nextNote = notes[Math.floor(Math.random() * notes.length)];
   if (notes.length > 1) {
