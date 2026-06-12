@@ -4,6 +4,7 @@ const fmt = new Intl.NumberFormat("pt-BR");
 const shortFmt = new Intl.NumberFormat("pt-BR", { notation: "compact", maximumFractionDigits: 1 });
 const START_DATE = new Date("2026-04-21T18:52:00-03:00");
 const CAROUSEL_INTERVAL = 3200;
+const QUOTE_ROUND_SIZE = 10;
 const BIBLE_VERSES = [
   {
     text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.",
@@ -70,6 +71,9 @@ let memoryPreviewing = false;
 let memoryStarted = false;
 let flipToken = "";
 let lightboxListenersReady = false;
+let quoteItems = [];
+let quoteRound = 0;
+let quoteScore = 0;
 
 function setText(selector, value) {
   const element = $(selector);
@@ -550,6 +554,110 @@ function shuffle(items) {
   return copy;
 }
 
+function quoteAnswerLabel(answer) {
+  return answer === "eu" ? "André" : "Laura";
+}
+
+function setupQuoteGame() {
+  const container = $("#quoteGame");
+  if (!container) return;
+
+  const rawItems = Array.isArray(data.quoteGame) ? data.quoteGame : [];
+  const uniqueItems = [...new Map(rawItems.map((item) => [`${item.answer}-${item.text}`, item])).values()];
+  quoteItems = shuffle(uniqueItems).slice(0, Math.min(uniqueItems.length, QUOTE_ROUND_SIZE));
+  quoteRound = 0;
+  quoteScore = 0;
+
+  if (!quoteItems.length) {
+    container.replaceChildren(
+      create("p", "soft-copy", "Ainda não consegui separar frases boas para esse joguinho. Quando o ZIP for atualizado, ele aparece aqui.")
+    );
+    return;
+  }
+
+  renderQuoteRound();
+}
+
+function renderQuoteRound(selectedAnswer = null) {
+  const container = $("#quoteGame");
+  if (!container) return;
+
+  if (quoteRound >= quoteItems.length) {
+    const title = create("h3", "", "Fim do jogo!");
+    const score = create("p", "quote-final-score", `${quoteScore} de ${quoteItems.length} acertos`);
+    const message =
+      quoteScore === quoteItems.length
+        ? "Perfeito. Você conhece a gente bem demais."
+        : "Naaaao. Tenta de novo meu amor. Agora vem outra rodada com frases diferentes.";
+    const copy = create("p", "soft-copy", message);
+    const restart = create("button", "note-button", "Jogar de novo e sortear frases");
+    restart.type = "button";
+    restart.addEventListener("click", setupQuoteGame);
+    const finalCard = create("div", "quote-final");
+    finalCard.append(title, score, copy, restart);
+    container.replaceChildren(finalCard);
+    return;
+  }
+
+  const current = quoteItems[quoteRound];
+  const answered = selectedAnswer !== null;
+  const isCorrect = selectedAnswer === current.answer;
+
+  const progress = create("div", "quote-progress");
+  progress.append(
+    create("span", "", `${quoteRound + 1} de ${quoteItems.length}`),
+    create("strong", "", `${quoteScore} acertos`)
+  );
+
+  const dots = create("div", "quote-dots");
+  dots.replaceChildren(
+    ...quoteItems.map((_, index) => create("span", index === quoteRound ? "active" : index < quoteRound ? "done" : ""))
+  );
+
+  const quote = create("blockquote", "quote-card");
+  quote.append(create("span", "quote-mark", "“"), create("p", "", current.text));
+
+  const options = create("div", "quote-options");
+  [
+    ["eu", "André"],
+    ["voce", "Laura",],
+  ].forEach(([value, label, helper]) => {
+    const button = create("button", "quote-choice");
+    button.type = "button";
+    button.append(create("strong", "", label), create("span", "", helper));
+    button.disabled = answered;
+    if (answered && value === current.answer) button.classList.add("correct");
+    if (answered && value === selectedAnswer && !isCorrect) button.classList.add("wrong");
+    button.addEventListener("click", () => {
+      if (value === current.answer) quoteScore += 1;
+      renderQuoteRound(value);
+    });
+    options.append(button);
+  });
+
+  const footer = create("div", "quote-footer");
+  if (answered) {
+    const result = create("p", `quote-result ${isCorrect ? "right" : "almost"}`);
+    result.textContent = isCorrect
+      ? `Acertouu. Você conhece a gente muito bem!`
+      : `Errouuu. Foi ${quoteAnswerLabel(current.answer)} que mandou essa.`;
+    const date = current.date ? create("span", "quote-date", `Mensagem de ${current.date}`) : null;
+    const next = create("button", "note-button", quoteRound + 1 === quoteItems.length ? "Ver resultado" : "Próxima frase");
+    next.type = "button";
+    next.addEventListener("click", () => {
+      quoteRound += 1;
+      renderQuoteRound();
+    });
+    footer.append(result);
+    if (date) footer.append(date);
+    footer.append(next);
+  } else {
+    footer.append(create("p", "quote-hint", "Escolhe sem pensar muito. O coração costuma acertar antes da cabeça."));
+  }
+
+  container.replaceChildren(progress, dots, quote, options, footer);
+}
+
 function trapLightboxFocus(event) {
   const lightbox = $("#lightbox");
   if (!lightbox) return;
@@ -840,8 +948,23 @@ function setupActiveNav() {
   sections.forEach((section) => observer.observe(section));
 }
 
+function setupBackToTop() {
+  const button = $("#backToTop");
+  if (!button) return;
+
+  const toggle = () => {
+    button.classList.toggle("visible", window.scrollY > 520);
+  };
+
+  button.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+  });
+  window.addEventListener("scroll", toggle, { passive: true });
+  toggle();
+}
+
 function setupRevealAnimations() {
-  const targets = document.querySelectorAll(".section-heading, .stat-card, .panel, .milestone, .hero-stat, .phrase-card, .gallery-item, .verse-card");
+  const targets = document.querySelectorAll(".section-heading, .stat-card, .panel, .milestone, .hero-stat, .phrase-card, .gallery-item, .verse-card, .quote-card");
   targets.forEach((element) => element.classList.add("reveal"));
   const observer = new IntersectionObserver(
     (entries) =>
@@ -867,6 +990,7 @@ function boot() {
   renderVerse();
   renderStoryStats();
   renderPhrases();
+  setupQuoteGame();
   renderTopics();
   renderWords();
   renderRhythm();
@@ -880,6 +1004,7 @@ function boot() {
   $("#noteButton")?.addEventListener("click", renderNote);
   $("#restartMemory")?.addEventListener("click", startMemoryGame);
   setupActiveNav();
+  setupBackToTop();
   setupRevealAnimations();
 }
 

@@ -20,18 +20,24 @@
   </head>
   <body>
     <header class="topbar">
+      <div class="topbar-inner">
+        <a class="topbar-brand" href="#inicio" aria-label="Voltar ao inicio">
+          <span class="brand-mark">A+L</span>
+          <span class="brand-copy">
+            <strong>André + Laura</strong>
+            <small>Nosso cantinho</small>
+          </span>
+        </a>
       <nav class="nav" aria-label="Seções">
+        <a href="#inicio">Início</a>
         <a href="#tempo">Tempo</a>
-        <a href="#carta">Carta</a>
+        <a href="#versiculo">Versículo</a>
+        <a href="#carta">Cartinha</a>
         <a href="#fotos">Fotos</a>
-        <a href="#marcos">Marcos</a>
-        <a href="#versiculo">Palavra</a>
-        <a href="#resumo">Resumo</a>
-        <a href="#frases">Frases</a>
-        <a href="#assuntos">Assuntos</a>
-        <a href="#palavras">Palavras</a>
-        <a href="#ritmo">Ritmo</a>
-      </nav>
+        <a href="#marcos">Momentos</a>
+        <a href="#resumo">Estatísticas</a>
+        </nav>
+      </div>
     </header>
 
     <main>
@@ -160,9 +166,17 @@
         <div class="phrase-grid" id="phraseGrid"></div>
       </section>
 
+      <section class="section" id="quem-falou">
+        <div class="section-heading">
+          <p class="eyebrow">Joguinho rápido</p>
+          <h2>Quem falou a frase?</h2>
+        </div>
+        <div class="quote-game-panel panel" id="quoteGame" aria-live="polite"></div>
+      </section>
+
       <section class="section section-alt" id="assuntos">
         <div class="section-heading">
-          <p class="eyebrow">Nã faltou assunto entre a gente</p>
+          <p class="eyebrow">Não faltou assunto entre a gente</p>
           <h2>Sempre tinhas algo pra conversar</h2>
         </div>
         <div class="two-columns">
@@ -231,5 +245,6 @@
       <span>Feito por mim, para você, amor.</span>
       <span id="generatedAt"></span>
     </footer>
+    <button class="back-to-top" id="backToTop" type="button" aria-label="Voltar ao topo">Topo</button>
   </body>
 </html>

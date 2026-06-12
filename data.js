@@ -1,5 +1,5 @@
 window.CHAT_STORY = {
-  "generatedAt": "12/06/2026 00:44",
+  "generatedAt": "12/06/2026 01:32",
   "sourceZip": "conversa-whatsapp.zip",
   "participants": [
     "Eu",
@@ -1301,6 +1301,248 @@ window.CHAT_STORY = {
       "title": "A hora que mais parece nossa",
       "date": "22:00",
       "body": "2.696 mensagens nessa faixa de horário."
+    }
+  ],
+  "quoteGame": [
+    {
+      "text": "Disse que sempre imaginou eu namorando uma menina nerdzinha de óculos igual você kkkkkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "01/05/2026"
+    },
+    {
+      "text": "Amor lá deve ter 10 mil habitantes KKKKKKK",
+      "answer": "voce",
+      "label": "Você",
+      "date": "01/06/2026"
+    },
+    {
+      "text": "Chega um momento que é necessário faltar pra estudar mesmo amor kkkkk normal",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "01/06/2026"
+    },
+    {
+      "text": "Vai dormir mesmo amor, amanhã você dorme até 8:59 então kkkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "02/05/2026"
+    },
+    {
+      "text": "Obrigada amor, mas eu tô meio longe de perfeita kkkkk",
+      "answer": "voce",
+      "label": "Você",
+      "date": "04/05/2026"
+    },
+    {
+      "text": "Amor você vai chegar no shopping 17h30 ou sair do trabalho 17h30?kkk",
+      "answer": "voce",
+      "label": "Você",
+      "date": "05/06/2026"
+    },
+    {
+      "text": "Fazer exercícios pra ficar feliz amor? Kkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "07/05/2026"
+    },
+    {
+      "text": "Obrigada amor❤️ te amo muito, e amém, que a gente saiba reconhecer e abraçar a vontade Deus nas nossas vidas",
+      "answer": "voce",
+      "label": "Você",
+      "date": "07/05/2026"
+    },
+    {
+      "text": "Eu fiquei nem meia hora e fui dormir amor kkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "07/06/2026"
+    },
+    {
+      "text": "Nossa amor te admiro demais, 22h eu jamais começaria a estudarkkkk",
+      "answer": "voce",
+      "label": "Você",
+      "date": "07/06/2026"
+    },
+    {
+      "text": "E quais cores? Lembro só do branco amor kkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "08/05/2026"
+    },
+    {
+      "text": "Oii amor to na aula já, achei que o prof ia atrasar maiskkkk",
+      "answer": "voce",
+      "label": "Você",
+      "date": "08/05/2026"
+    },
+    {
+      "text": "Mas se te incomodar muito amor, pra lavar casa ou treinar sla, não tem problema também não",
+      "answer": "voce",
+      "label": "Você",
+      "date": "09/06/2026"
+    },
+    {
+      "text": "Amor sexta vc vai ta de carro? Só pra eu pensar a logística aqui kkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "10/06/2026"
+    },
+    {
+      "text": "Ta tudo bem amor, eu também sou assim as vezes kkkkkkk não preocupa",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "12/05/2026"
+    },
+    {
+      "text": "Eu fico indignado com a cara de pau amor KKKKKKKKKKKKKK",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "14/05/2026"
+    },
+    {
+      "text": "Meu pai parece criança pequena, passou do 12h e ele n almoçou fica emburrado kkkkk aí ele foi o primeiro a sair de casa",
+      "answer": "voce",
+      "label": "Você",
+      "date": "15/03/2026"
+    },
+    {
+      "text": "E então kkkk quais os seus planos pra hoje amor?",
+      "answer": "voce",
+      "label": "Você",
+      "date": "15/05/2026"
+    },
+    {
+      "text": "Amor to trabalhando nas minhas habilidades culinárias ainda kkkk",
+      "answer": "voce",
+      "label": "Você",
+      "date": "16/05/2026"
+    },
+    {
+      "text": "Kkkkkkkkkk amor vc vai descobrir de onde vem minha vontade de comer doce",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "16/05/2026"
+    },
+    {
+      "text": "Ai na sua casa vocês costumam comer todos juntos? Tipo na mesa kkkkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "20/01/2026"
+    },
+    {
+      "text": "Que chique amor, vou ter que pesquisar quando custa essa máquina kkkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "20/05/2026"
+    },
+    {
+      "text": "Uai amor eu raramente fico de tpm mesmokkkk dor e cólica é bem raro também",
+      "answer": "voce",
+      "label": "Você",
+      "date": "20/05/2026"
+    },
+    {
+      "text": "Amor, sobre oq que sua mãe falou hoje foi meio que um \"ela vai pra França viu, não atrapalha\"? Kkkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "21/05/2026"
+    },
+    {
+      "text": "Estudar, arrumar a casa e comemorar um mês de namoro com meu namorado maravilhoso",
+      "answer": "voce",
+      "label": "Você",
+      "date": "21/05/2026"
+    },
+    {
+      "text": "Boa noite viu, dorme com Deus meu amor",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "22/04/2026"
+    },
+    {
+      "text": "Amor não consegui escutar nada no áudio kkkkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "23/04/2026"
+    },
+    {
+      "text": "Kkkkkkkkkkk ta tudo bem amor, final de semana pode dormir um pouquinho a mais",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "23/05/2026"
+    },
+    {
+      "text": "Muito bomm, to aqui com a olivia na limpeza de pele, quando chegar em casa te respondo amor",
+      "answer": "voce",
+      "label": "Você",
+      "date": "23/05/2026"
+    },
+    {
+      "text": "Inclusive o namorado dela me chamou pra usar o duolingo pro de graça kkkkkk oq tava com uma vaga sem usar",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "25/04/2026"
+    },
+    {
+      "text": "Eu animo amor, mas real só tenho a blusa xadrez kkkkkkk",
+      "answer": "voce",
+      "label": "Você",
+      "date": "26/05/2026"
+    },
+    {
+      "text": "Sou muito feliz ao seu lado, peço a Deus que sempre me ilumine e me guie pra me tornar a cada dia um namorado melhor pra você",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "26/05/2026"
+    },
+    {
+      "text": "Você vai chegar e os instrutores vão ficar tudo \"vai embora pelo amor de Deus\" kkkkkkk",
+      "answer": "voce",
+      "label": "Você",
+      "date": "27/03/2026"
+    },
+    {
+      "text": "Amor minha cara tá péssima kkkk e mostrou toda a bagunça do quarto",
+      "answer": "voce",
+      "label": "Você",
+      "date": "27/05/2026"
+    },
+    {
+      "text": "Amor eu acho que o Breno ta nesse grupo?????kkkkkk",
+      "answer": "voce",
+      "label": "Você",
+      "date": "28/04/2026"
+    },
+    {
+      "text": "Tadinho amor, quando ta tranquilo você acha esquisito kkkk <This message was edited>",
+      "answer": "voce",
+      "label": "Você",
+      "date": "29/04/2026"
+    },
+    {
+      "text": "Tava com tanta fome que nem deu tempo amor kkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "29/04/2026"
+    },
+    {
+      "text": "To pensando em sair de casa 7h30 amor, mas te aviso",
+      "answer": "voce",
+      "label": "Você",
+      "date": "29/05/2026"
+    },
+    {
+      "text": "Eu te chamaria pra gente sair, mas ai minha mãe e meu pai ja iam pensar que a gente namora sabe kkkkkkkkk",
+      "answer": "eu",
+      "label": "Eu",
+      "date": "30/01/2026"
+    },
+    {
+      "text": "Amor não me julga, mas te imaginei com a barba meio feita meio não feita KKKKKK só que partido ao meio sabe",
+      "answer": "voce",
+      "label": "Você",
+      "date": "30/05/2026"
     }
   ],
   "photos": [
