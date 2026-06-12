@@ -5,6 +5,7 @@ const shortFmt = new Intl.NumberFormat("pt-BR", { notation: "compact", maximumFr
 const START_DATE = new Date("2026-04-21T18:52:00-03:00");
 const CAROUSEL_INTERVAL = 3200;
 const QUOTE_ROUND_SIZE = 10;
+const DATE_PLAN_WHATSAPP = "5534999118869";
 const BIBLE_VERSES = [
   {
     text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.",
@@ -74,6 +75,7 @@ let lightboxListenersReady = false;
 let quoteItems = [];
 let quoteRound = 0;
 let quoteScore = 0;
+let dateModalLastFocused = null;
 
 function setText(selector, value) {
   const element = $(selector);
@@ -658,6 +660,234 @@ function renderQuoteRound(selectedAnswer = null) {
   container.replaceChildren(progress, dots, quote, options, footer);
 }
 
+function formatDateForPlan(value) {
+  if (!value) return "";
+  const [year, month, day] = value.split("-");
+  if (!year || !month || !day) return value;
+  return `${day}/${month}/${year}`;
+}
+
+function formatShortDateForPlan(value) {
+  if (!value) return "";
+  const [, month, day] = value.split("-");
+  if (!month || !day) return value;
+  return `${day}/${month}`;
+}
+
+function collectDatePlan() {
+  const planner = $("#datePlanner");
+  if (!planner) return null;
+  const type = $("#dateType")?.value || "";
+  const food = $("#dateFood")?.value || "";
+  return {
+    day: $("#dateDay")?.value || "",
+    time: $("#dateTime")?.value || "",
+    type,
+    food,
+    otherType: $("#dateOtherType")?.value.trim() || "",
+    otherFood: $("#dateOtherFood")?.value.trim() || "",
+  };
+}
+
+function datePlanMissingFields(plan) {
+  const missing = [];
+  if (!plan?.day) missing.push("o dia");
+  if (!plan?.time) missing.push("o horário");
+  if (!plan?.type) missing.push("o tipo de encontro");
+  if (plan?.type === "Outro" && !plan.otherType) missing.push("qual encontro você quer");
+  if (!plan?.food) missing.push("a comida ou bebida");
+  if (plan?.food === "Outro" && !plan.otherFood) missing.push("qual comida ou bebida você quer");
+  return missing;
+}
+
+function getDatePlanType(plan) {
+  return plan?.type === "Outro" ? plan.otherType : plan?.type || "";
+}
+
+function getDatePlanFood(plan) {
+  return plan?.food === "Outro" ? plan.otherFood : plan?.food || "";
+}
+
+function updateDateSummary() {
+  const summary = $("#dateSummary");
+  if (!summary) return;
+  const plan = collectDatePlan();
+  const preview = $("#datePreview");
+  const items = [
+    ["Dia", formatDateForPlan(plan?.day) || "Ainda falta escolher"],
+    ["Horário", plan?.time || "Ainda falta escolher"],
+    ["Onde", getDatePlanType(plan) || "Ainda falta escolher"],
+    ["Comida", getDatePlanFood(plan) || "Ainda falta escolher"],
+  ];
+
+  summary.replaceChildren(
+    ...items.flatMap(([label, value]) => {
+      const term = create("dt", "", label);
+      const detail = create("dd", value === "Ainda falta escolher" ? "missing" : "", value);
+      return [term, detail];
+    })
+  );
+
+  if (!preview) return;
+  const missing = datePlanMissingFields(plan);
+  preview.textContent = missing.length
+    ? "Quando você terminar de escolher, eu já deixo a mensagem prontinha aqui."
+    : buildDatePlanMessage(plan);
+  preview.classList.toggle("ready", !missing.length);
+}
+
+function datePlanActionPhrase(plan) {
+  const type = getDatePlanType(plan);
+  const food = getDatePlanFood(plan);
+  const normalized = type.toLocaleLowerCase("pt-BR");
+  const actions = {
+    missa: "ir à missa",
+    cinema: "ir ao cinema",
+    piquenique: "fazer um piquenique",
+    cafeteria: "ir à cafeteria",
+    "filme em casa": "ver um filme em casa",
+    "passeio no parque": "passear no parque",
+  };
+
+  if (normalized === "sair para comer algo diferente") {
+    return food ? `sair para comer ${food}` : "sair para comer algo diferente";
+  }
+
+  return actions[normalized] || normalized || type;
+}
+
+function datePlanFoodPhrase(plan) {
+  const food = getDatePlanFood(plan);
+  const normalized = food.toLocaleLowerCase("pt-BR");
+  if (/^(comer|tomar|beber)\b/i.test(food)) return food;
+  if (["café", "açaí", "sorvete"].includes(normalized)) return `tomar ${food}`;
+  return `comer ${food}`;
+}
+
+function buildDatePlanMessage(plan) {
+  const action = datePlanActionPhrase(plan);
+  const foodPhrase =
+    getDatePlanType(plan).toLocaleLowerCase("pt-BR") === "sair para comer algo diferente"
+      ? ""
+      : ` e ${datePlanFoodPhrase(plan)}`;
+  return [
+    `Oiii, amor! Escolhi nosso próximo encontro! No dia ${formatShortDateForPlan(plan.day)} às ${plan.time}, vamos ${action}${foodPhrase}. O que você acha meu bem?`,
+  ].join("\n");
+}
+
+function showDateValidation(message = "") {
+  const validation = $("#dateValidation");
+  if (!validation) return;
+  validation.textContent = message;
+  validation.classList.toggle("visible", Boolean(message));
+}
+
+function toggleDateOtherInput(group, selectedValue) {
+  const label = $(`[data-other-for="${group}"]`);
+  if (!label) return;
+  const input = label.querySelector("input");
+  const isOther = selectedValue === "Outro";
+  label.classList.toggle("hidden", !isOther);
+  if (!isOther && input) input.value = "";
+  if (isOther) input?.focus?.({ preventScroll: true });
+}
+
+function openDatePlannerModal() {
+  const modal = $("#datePlannerModal");
+  if (!modal) return;
+  dateModalLastFocused = document.activeElement;
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+  window.requestAnimationFrame(() => {
+    modal.classList.add("open");
+    $("#dateDay")?.focus?.({ preventScroll: true });
+  });
+}
+
+function closeDatePlannerModal() {
+  const modal = $("#datePlannerModal");
+  if (!modal || modal.hidden) return;
+  modal.classList.remove("open");
+  document.body.style.overflow = "";
+  window.setTimeout(() => {
+    modal.hidden = true;
+    dateModalLastFocused?.focus?.();
+    dateModalLastFocused = null;
+  }, prefersReducedMotion() ? 0 : 180);
+}
+
+function sendDatePlanToWhatsApp() {
+  const plan = collectDatePlan();
+  const missing = datePlanMissingFields(plan);
+  if (missing.length) {
+    showDateValidation(`Amor, falta escolher ${missing.join(", ")} antes de me mandar.`);
+    const firstMissing = !plan.day
+      ? $("#dateDay")
+      : !plan.time
+        ? $("#dateTime")
+        : !plan.type
+          ? $("#dateType")
+          : $("#dateFood");
+    const otherMissing =
+      plan.type === "Outro" && !plan.otherType
+        ? $("#dateOtherType")
+        : plan.food === "Outro" && !plan.otherFood
+          ? $("#dateOtherFood")
+          : null;
+    const target = otherMissing || firstMissing;
+    target?.focus?.({ preventScroll: true });
+    target?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  showDateValidation("");
+  const url = `https://wa.me/${DATE_PLAN_WHATSAPP}?text=${encodeURIComponent(buildDatePlanMessage(plan))}`;
+  const opened = window.open(url, "_blank", "noopener,noreferrer");
+  if (!opened) window.location.href = url;
+}
+
+function setupDatePlanner() {
+  const planner = $("#datePlanner");
+  if (!planner) return;
+  const modal = $("#datePlannerModal");
+  if (modal && modal.parentElement !== document.body) document.body.append(modal);
+
+  const dayInput = $("#dateDay");
+  if (dayInput) dayInput.min = new Date().toISOString().slice(0, 10);
+
+  toggleDateOtherInput("type", "");
+  toggleDateOtherInput("food", "");
+
+  $("#openDatePlanner")?.addEventListener("click", openDatePlannerModal);
+  document.querySelectorAll("[data-close-date]").forEach((button) => button.addEventListener("click", closeDatePlannerModal));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !$("#datePlannerModal")?.hidden) closeDatePlannerModal();
+  });
+
+  $("#dateType")?.addEventListener("change", (event) => {
+    toggleDateOtherInput("type", event.target.value);
+    showDateValidation("");
+    updateDateSummary();
+  });
+
+  $("#dateFood")?.addEventListener("change", (event) => {
+    toggleDateOtherInput("food", event.target.value);
+    showDateValidation("");
+    updateDateSummary();
+  });
+
+  planner.querySelectorAll("input, select").forEach((input) => {
+    input.addEventListener("input", () => {
+      showDateValidation("");
+      updateDateSummary();
+    });
+    input.addEventListener("change", updateDateSummary);
+  });
+
+  $("#sendDatePlan")?.addEventListener("click", sendDatePlanToWhatsApp);
+  updateDateSummary();
+}
+
 function trapLightboxFocus(event) {
   const lightbox = $("#lightbox");
   if (!lightbox) return;
@@ -964,7 +1194,7 @@ function setupBackToTop() {
 }
 
 function setupRevealAnimations() {
-  const targets = document.querySelectorAll(".section-heading, .stat-card, .panel, .milestone, .hero-stat, .phrase-card, .gallery-item, .verse-card, .quote-card");
+  const targets = document.querySelectorAll(".section-heading, .stat-card, .panel, .milestone, .hero-stat, .phrase-card, .gallery-item, .verse-card, .quote-card, .date-invite, .date-summary");
   targets.forEach((element) => element.classList.add("reveal"));
   const observer = new IntersectionObserver(
     (entries) =>
@@ -991,6 +1221,7 @@ function boot() {
   renderStoryStats();
   renderPhrases();
   setupQuoteGame();
+  setupDatePlanner();
   renderTopics();
   renderWords();
   renderRhythm();

@@ -36,6 +36,8 @@
         <a href="#fotos">Fotos</a>
         <a href="#marcos">Momentos</a>
         <a href="#resumo">Estatísticas</a>
+        <a href="#quem-falou">Jogo</a>
+        <a href="#encontro">Encontro</a>
         </nav>
       </div>
     </header>
@@ -238,6 +240,93 @@
         </div>
         <p class="love-note" id="loveNote"></p>
         <button class="note-button" id="noteButton" type="button">Me dá outro bilhetinho</button>
+      </section>
+
+      <section class="section section-alt date-planner-section" id="encontro">
+        <div class="section-heading">
+          <p class="eyebrow">Agora é com você</p>
+          <h2>Escolha nosso próximo encontro</h2>
+        </div>
+        <div class="date-invite panel">
+          <h3>Monte o date e me manda</h3>
+          <p>Aperta aqui, monta nosso próximo encontro e eu recebo tudo prontinho no WhatsApp.</p>
+          <button class="date-open-button" id="openDatePlanner" type="button">Escolher o próximo encontro</button>
+        </div>
+
+        <div class="date-modal" id="datePlannerModal" role="dialog" aria-modal="true" aria-labelledby="datePlannerTitle" hidden>
+          <button class="date-modal-backdrop" type="button" data-close-date aria-label="Fechar escolha do encontro"></button>
+          <div class="date-modal-card">
+            <button class="date-modal-close" type="button" data-close-date aria-label="Fechar">×</button>
+            <div class="date-planner" id="datePlanner">
+              <div class="date-planner-intro">
+                <h3 id="datePlannerTitle">Monte o date e me manda</h3>
+                <p>Escolhe o dia, o horário, onde a gente vai e o que vai ter de comida. Eu só obedeço, meu bem.</p>
+              </div>
+
+              <div class="date-planner-grid">
+                <fieldset class="date-fieldset date-inputs">
+                  <legend>Quando vai ser?</legend>
+                  <label class="date-input-label" for="dateDay">
+                    <span>Dia</span>
+                    <input id="dateDay" type="date" required />
+                  </label>
+                  <label class="date-input-label" for="dateTime">
+                    <span>Melhor horário</span>
+                    <input id="dateTime" type="time" required />
+                  </label>
+                </fieldset>
+
+                <fieldset class="date-fieldset">
+                  <legend>Menu do encontro</legend>
+                  <label class="date-input-label" for="dateType">
+                    <span>Tipo de encontro</span>
+                    <select id="dateType" required>
+                      <option value="">Escolha uma opção</option>
+                      <option value="Missa">Missa</option>
+                      <option value="Cinema">Cinema</option>
+                      <option value="Piquenique">Piquenique</option>
+                      <option value="Cafeteria">Cafeteria</option>
+                      <option value="Filme em casa">Filme em casa</option>
+                      <option value="Passeio no parque">Passeio no parque</option>
+                      <option value="Sair para comer algo diferente">Sair para comer algo diferente</option>
+                      <option value="Outro">Outro</option>
+                    </select>
+                  </label>
+                  <label class="date-input-label date-other-label" data-other-for="type" for="dateOtherType">
+                    <span>Qual outro?</span>
+                    <input id="dateOtherType" type="text" placeholder="Digite o encontro" autocomplete="off" />
+                  </label>
+
+                  <label class="date-input-label" for="dateFood">
+                    <span>Comida ou bebida</span>
+                    <select id="dateFood" required>
+                      <option value="">Escolha uma opção</option>
+                      <option value="Pizza">Pizza</option>
+                      <option value="Hambúrguer">Hambúrguer</option>
+                      <option value="Açaí">Açaí</option>
+                      <option value="Sorvete">Sorvete</option>
+                      <option value="Café">Café</option>
+                      <option value="Doce">Doce</option>
+                      <option value="Outro">Outro</option>
+                    </select>
+                  </label>
+                  <label class="date-input-label date-other-label" data-other-for="food" for="dateOtherFood">
+                    <span>Qual outro?</span>
+                    <input id="dateOtherFood" type="text" placeholder="Digite a comida ou bebida" autocomplete="off" />
+                  </label>
+                </fieldset>
+              </div>
+
+              <aside class="date-summary" aria-live="polite">
+                <h3>Resumo do pedido</h3>
+                <dl id="dateSummary"></dl>
+                <p class="date-preview" id="datePreview"></p>
+                <p class="date-validation" id="dateValidation" role="status"></p>
+                <button class="date-submit" id="sendDatePlan" type="button">Enviar minhas escolhas para o André 💌</button>
+              </aside>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 

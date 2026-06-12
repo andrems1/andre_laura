@@ -1064,6 +1064,383 @@ h3 {
   line-height: 1;
 }
 
+.date-planner-section {
+  background:
+    radial-gradient(circle at 15% 12%, rgba(240, 171, 252, 0.18), transparent 30%),
+    radial-gradient(circle at 90% 12%, rgba(79, 140, 255, 0.2), transparent 34%),
+    linear-gradient(180deg, rgba(7, 15, 38, 0.08), rgba(59, 33, 127, 0.18));
+}
+
+.date-invite {
+  display: grid;
+  max-width: 760px;
+  justify-items: center;
+  gap: 0.85rem;
+  margin: 0 auto;
+  padding: clamp(1.2rem, 4vw, 1.7rem);
+  border-color: rgba(139, 92, 246, 0.28);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(221, 214, 254, 0.88)),
+    var(--glass-strong);
+  text-align: center;
+}
+
+.date-invite h3 {
+  margin: 0;
+  color: var(--purple-dark);
+  font-size: clamp(1.35rem, 5vw, 1.9rem);
+}
+
+.date-invite p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  font-weight: 750;
+}
+
+.date-open-button {
+  min-height: 52px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4f8cff, #8b5cf6 58%, #c084fc);
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 950;
+  padding: 0.9rem 1.15rem;
+  box-shadow: 0 16px 34px rgba(79, 140, 255, 0.3);
+  transition:
+    transform 160ms ease,
+    filter 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.date-open-button:hover,
+.date-open-button:focus-visible {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 20px 38px rgba(139, 92, 246, 0.34);
+}
+
+.date-modal[hidden] {
+  display: none;
+}
+
+.date-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: clamp(0.85rem, 3vw, 1.5rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+  overscroll-behavior: contain;
+}
+
+.date-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.date-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(139, 92, 246, 0.24), transparent 38%),
+    rgba(5, 11, 31, 0.72);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.date-modal-card {
+  position: relative;
+  width: min(1060px, 100%);
+  max-height: min(88svh, 820px);
+  overflow: auto;
+  border: 1px solid rgba(219, 234, 254, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+  transform: translateY(14px) scale(0.98);
+  transition: transform 180ms ease;
+  scrollbar-color: rgba(139, 92, 246, 0.75) rgba(219, 234, 254, 0.18);
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.date-modal.open .date-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.date-modal-close {
+  position: absolute;
+  top: 0.72rem;
+  right: 0.72rem;
+  z-index: 2;
+  display: inline-grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(219, 234, 254, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--purple-dark);
+  cursor: pointer;
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 12px 28px rgba(5, 11, 31, 0.18);
+}
+
+.date-modal-close:hover,
+.date-modal-close:focus-visible {
+  background: #ffffff;
+  outline: 3px solid rgba(139, 92, 246, 0.22);
+}
+
+.date-planner {
+  display: grid;
+  max-width: none;
+  grid-template-columns: minmax(0, 1.45fr) minmax(290px, 0.72fr);
+  gap: 1rem;
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 1.35rem);
+  border-color: rgba(139, 92, 246, 0.24);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(221, 214, 254, 0.88)),
+    var(--glass-strong);
+}
+
+.date-planner-intro {
+  grid-column: 1 / -1;
+  padding: clamp(0.95rem, 3vw, 1.25rem);
+  border: 1px solid rgba(79, 140, 255, 0.18);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(79, 140, 255, 0.12), rgba(240, 171, 252, 0.18)),
+    rgba(255, 255, 255, 0.74);
+}
+
+.date-planner-intro h3,
+.date-summary h3 {
+  margin: 0 0 0.35rem;
+  color: var(--purple-dark);
+}
+
+.date-planner-intro p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  font-weight: 720;
+}
+
+.date-planner-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.date-fieldset {
+  display: grid;
+  gap: 0.8rem;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(0.9rem, 3vw, 1.1rem);
+  border: 1px solid rgba(79, 140, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.date-fieldset legend {
+  padding: 0 0.35rem;
+  color: var(--purple-dark);
+  font-size: 0.92rem;
+  font-weight: 950;
+}
+
+.date-inputs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.date-inputs legend {
+  grid-column: 1 / -1;
+}
+
+.date-input-label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.83rem;
+  font-weight: 900;
+}
+
+.date-input-label input,
+.date-input-label select {
+  min-height: 52px;
+  width: 100%;
+  border: 1px solid rgba(79, 140, 255, 0.22);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.96)),
+    #ffffff;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+  padding: 0.78rem 0.9rem;
+  box-shadow:
+    0 8px 20px rgba(5, 11, 31, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.date-input-label select {
+  appearance: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.96));
+  background-position:
+    calc(100% - 0.9rem) 50%,
+    0 0;
+  background-repeat: no-repeat;
+  background-size:
+    18px 18px,
+    100% 100%;
+  padding-right: 2.8rem;
+}
+
+.date-input-label select option {
+  background: #ffffff;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.date-input-label select:focus-visible,
+.date-input-label input:focus-visible {
+  border-color: rgba(139, 92, 246, 0.62);
+  outline: 3px solid rgba(139, 92, 246, 0.22);
+  box-shadow:
+    0 12px 26px rgba(79, 140, 255, 0.15),
+    0 0 0 1px rgba(139, 92, 246, 0.12) inset;
+}
+
+.date-other-label {
+  animation: note-pop 260ms ease both;
+}
+
+.date-other-label.hidden {
+  display: none;
+}
+
+.date-summary {
+  position: sticky;
+  top: 6.2rem;
+  align-self: start;
+  display: grid;
+  gap: 0.9rem;
+  padding: clamp(1rem, 3vw, 1.2rem);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(7, 20, 43, 0.95), rgba(59, 33, 127, 0.9)),
+    var(--night);
+  color: #ffffff;
+  box-shadow: 0 20px 46px rgba(5, 11, 31, 0.24);
+}
+
+.date-summary h3 {
+  color: #ffffff;
+}
+
+.date-summary dl {
+  display: grid;
+  grid-template-columns: 0.78fr 1fr;
+  gap: 0.5rem 0.7rem;
+  margin: 0;
+}
+
+.date-summary dt {
+  color: #c7d2fe;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.date-summary dd {
+  margin: 0;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.date-summary dd.missing {
+  color: #f0abfc;
+  font-style: italic;
+}
+
+.date-validation {
+  display: none;
+  margin: 0;
+  padding: 0.72rem 0.82rem;
+  border: 1px solid rgba(240, 171, 252, 0.36);
+  border-radius: 8px;
+  background: rgba(240, 171, 252, 0.14);
+  color: #ffe4ff;
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
+.date-validation.visible {
+  display: block;
+}
+
+.date-preview {
+  margin: 0;
+  padding: 0.78rem 0.85rem;
+  border: 1px solid rgba(219, 234, 254, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #dbeafe;
+  font-size: 0.88rem;
+  font-weight: 780;
+  line-height: 1.5;
+}
+
+.date-preview.ready {
+  border-color: rgba(240, 171, 252, 0.34);
+  background: rgba(240, 171, 252, 0.12);
+  color: #ffffff;
+}
+
+.date-submit {
+  min-height: 50px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4f8cff, #8b5cf6 58%, #c084fc);
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 950;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 16px 34px rgba(79, 140, 255, 0.3);
+  transition:
+    transform 160ms ease,
+    filter 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.date-submit:hover,
+.date-submit:focus-visible {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 20px 38px rgba(139, 92, 246, 0.34);
+}
+
 .topic-note {
   margin: 0;
   color: var(--muted);
@@ -1835,8 +2212,8 @@ h3 {
 .back-to-top {
   position: fixed;
   right: clamp(1rem, 4vw, 1.6rem);
-  bottom: clamp(1rem, 4vw, 1.6rem);
-  z-index: 35;
+  bottom: calc(clamp(1rem, 4vw, 1.6rem) + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
   display: inline-flex;
   min-width: 54px;
   min-height: 54px;
@@ -1846,13 +2223,15 @@ h3 {
   border: 1px solid rgba(219, 234, 254, 0.38);
   border-radius: 999px;
   background:
-    linear-gradient(135deg, rgba(79, 140, 255, 0.96), rgba(139, 92, 246, 0.96)),
+    linear-gradient(135deg, rgba(79, 140, 255, 0.98), rgba(139, 92, 246, 0.98)),
     var(--purple);
   color: #ffffff;
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 950;
-  box-shadow: 0 18px 38px rgba(5, 11, 31, 0.32);
+  box-shadow:
+    0 18px 38px rgba(5, 11, 31, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
   opacity: 0;
   pointer-events: none;
   transform: translateY(14px) scale(0.92);
@@ -2011,6 +2390,22 @@ h3 {
   .meetup-days {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .date-planner {
+    grid-template-columns: 1fr;
+  }
+
+  .date-planner-intro {
+    grid-column: 1;
+  }
+
+  .date-summary {
+    position: static;
+  }
+
+  .date-modal-card {
+    width: min(720px, 100%);
+  }
 }
 
 @media (max-width: 720px) {
@@ -2063,6 +2458,69 @@ h3 {
   .hero,
   .section {
     padding-inline: 1rem;
+  }
+
+  .date-planner {
+    gap: 0.85rem;
+    padding: 0.85rem;
+  }
+
+  .date-planner-intro,
+  .date-fieldset,
+  .date-summary {
+    padding: 0.95rem;
+  }
+
+  .date-inputs,
+  .date-input-label input,
+  .date-input-label select,
+  .date-open-button,
+  .date-submit {
+    min-height: 52px;
+  }
+
+  .date-open-button {
+    width: 100%;
+  }
+
+  .date-modal {
+    align-items: end;
+    padding: 0.7rem;
+  }
+
+  .date-modal-card {
+    width: 100%;
+    max-height: 92svh;
+    border-radius: 14px 14px 8px 8px;
+  }
+
+  .date-modal-close {
+    top: 0.58rem;
+    right: 0.58rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .date-planner-intro {
+    padding-right: 3rem;
+  }
+
+  .date-input-label {
+    font-size: 0.8rem;
+  }
+
+  .date-input-label select {
+    font-size: 0.92rem;
+    line-height: 1.25;
+  }
+
+  .date-summary dl {
+    grid-template-columns: 1fr;
+    gap: 0.18rem 0;
+  }
+
+  .date-summary dd {
+    margin-bottom: 0.36rem;
   }
 
   .hero {
@@ -2262,7 +2720,7 @@ h3 {
 
   .note-section {
     width: calc(100% - 2rem);
-    margin-bottom: 4rem;
+    margin-bottom: 1.5rem;
     padding: 1.2rem;
   }
 
