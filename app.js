@@ -771,7 +771,7 @@ function buildDatePlanMessage(plan) {
       ? ""
       : ` e ${datePlanFoodPhrase(plan)}`;
   return [
-    `Oiii, amor! Escolhi nosso próximo encontro! No dia ${formatShortDateForPlan(plan.day)} às ${plan.time}, vamos ${action}${foodPhrase}. O que você acha meu bem?`,
+    `Oiii, amor! Escolhi nosso próximo encontro! No dia ${formatShortDateForPlan(plan.day)} às ${plan.time}, vamos ${action}${foodPhrase}. O que você acha?`,
   ].join("\n");
 }
 
