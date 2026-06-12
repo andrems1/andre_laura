@@ -1270,38 +1270,45 @@ window.CHAT_STORY = {
     {
       "title": "A primeira mensagem",
       "date": "27/12/2025 às 00:24",
-      "body": "Foi assim que a nossa conversa começou: Oii, boa noite"
+      "body": "Foi assim que a nossa conversa começou: 'Oii, boa noite'"
     },
     {
-      "title": "Quando o chat ganhou voz",
-      "date": "30/12/2025 às 20:51",
-      "body": "Apareceu o primeiro áudio, e a conversa começou a ter pausa, risada, jeitinho e voz de verdade."
+      "title": "Nosso primeiro encontro",
+      "date": "04/01/2026",
+      "body": "Ir na missa e comer algo, foi o nosso primeiro e segue sendo top encontro."
     },
     {
       "title": "Quando a gente começou a namorar",
-      "date": "21/04/2026 às 18:52",
-      "body": "O contador começa aqui. A partir desse instante, a conversa ficou com outro brilho e um monte de futuro escondido nas mensagens."
+      "date": "21/04/2026",
+      "body": "A partir desse dia, a conversa ficou com outro brilho diferente."
     },
     {
-      "title": "Amor virou nome",
+      "title": "Nos chamamos de amor pela primeira vez",
       "date": "21/04/2026 às 20:34",
-      "body": "Depois desse dia, chamar de amor deixou de ser só uma palavra bonita e virou um pedacinho da rotina."
+      "body": "Depois desse dia, chamar de amor virou regra kkkkkkk."
     },
     {
-      "title": "O primeiro eu te amo escrito",
-      "date": "21/04/2026 às 22:45",
-      "body": "Aqui o chat entregou em palavras uma coisa que já vinha crescendo no meio das conversas."
+      "title": "O primeiro eu te amo",
+      "date": "21/04/2026",
+      "body": "Escrito naquela cartinha feita enquanto eu visitava o Santissimo."
     },
     {
-      "title": "O dia mais cheio da conversa",
-      "date": "06/05/2026",
-      "body": "472 mensagens em um dia só. Um exagero bonito."
+      "title": "Dia que conheci seus pais",
+      "date": "26/04/2026",
+      "body": "Naquele jantar na sua casa."
     },
     {
-      "title": "A hora que mais parece nossa",
-      "date": "22:00",
-      "body": "2.696 mensagens nessa faixa de horário."
-    }
+      "title": "Dia que você conheceu minha familia",
+      "date": "01/05/2026",
+      "body": "Naquele aniversario em Araguari."
+    },
+    {
+      "title": "Todos os dias",
+      "date": "∞",
+      "body": "Qualquer momento ao seu lado é especial. Sou muito grato por cada dia que passamos juntos, e espero que possamos criar muitas mais memórias incríveis no futuro."
+    },
+    
+  
   ],
   "quoteGame": [
     {
@@ -1377,12 +1384,6 @@ window.CHAT_STORY = {
       "date": "08/05/2026"
     },
     {
-      "text": "Mas se te incomodar muito amor, pra lavar casa ou treinar sla, não tem problema também não",
-      "answer": "voce",
-      "label": "Você",
-      "date": "09/06/2026"
-    },
-    {
       "text": "Amor sexta vc vai ta de carro? Só pra eu pensar a logística aqui kkkk",
       "answer": "eu",
       "label": "Eu",
@@ -1443,12 +1444,6 @@ window.CHAT_STORY = {
       "date": "20/05/2026"
     },
     {
-      "text": "Amor, sobre oq que sua mãe falou hoje foi meio que um \"ela vai pra França viu, não atrapalha\"? Kkkkkkk",
-      "answer": "eu",
-      "label": "Eu",
-      "date": "21/05/2026"
-    },
-    {
       "text": "Estudar, arrumar a casa e comemorar um mês de namoro com meu namorado maravilhoso",
       "answer": "voce",
       "label": "Você",
@@ -1470,12 +1465,6 @@ window.CHAT_STORY = {
       "text": "Kkkkkkkkkkk ta tudo bem amor, final de semana pode dormir um pouquinho a mais",
       "answer": "eu",
       "label": "Eu",
-      "date": "23/05/2026"
-    },
-    {
-      "text": "Muito bomm, to aqui com a olivia na limpeza de pele, quando chegar em casa te respondo amor",
-      "answer": "voce",
-      "label": "Você",
       "date": "23/05/2026"
     },
     {
@@ -1515,7 +1504,7 @@ window.CHAT_STORY = {
       "date": "28/04/2026"
     },
     {
-      "text": "Tadinho amor, quando ta tranquilo você acha esquisito kkkk <This message was edited>",
+      "text": "Tadinho amor, quando ta tranquilo você acha esquisito kkkk",
       "answer": "voce",
       "label": "Você",
       "date": "29/04/2026"

@@ -587,8 +587,8 @@ function renderQuoteRound(selectedAnswer = null) {
     const score = create("p", "quote-final-score", `${quoteScore} de ${quoteItems.length} acertos`);
     const message =
       quoteScore === quoteItems.length
-        ? "Perfeito. Você conhece a gente bem demais."
-        : "Naaaao. Tenta de novo meu amor. Agora vem outra rodada com frases diferentes.";
+        ? "Boa amor! Tenta mais uma vez vai."
+        : "Boa amor! Tenta mais uma vez vai.";
     const copy = create("p", "soft-copy", message);
     const restart = create("button", "note-button", "Jogar de novo e sortear frases");
     restart.type = "button";
